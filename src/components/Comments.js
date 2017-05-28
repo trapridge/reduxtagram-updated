@@ -1,11 +1,12 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Raven from 'raven-js'  
 
 export default class Comments extends React.Component {
   static propTypes = {
-    postComments: React.PropTypes.array.isRequired,
-    addComment: React.PropTypes.func.isRequired,
-    removeComment: React.PropTypes.func.isRequired,
+    postComments: PropTypes.array.isRequired,
+    addComment: PropTypes.func.isRequired,
+    removeComment: PropTypes.func.isRequired,
   }
 
   render() {
@@ -16,7 +17,7 @@ export default class Comments extends React.Component {
             <div className="comment" key={i}>
               <p>
                 <strong>{comment.user}</strong>
-                {comment.text} :)
+                {comment.text}
                 <button onClick={this.handleCommentRemove.bind(this, i)} 
                   className="remove-comment">&times;</button>
               </p>

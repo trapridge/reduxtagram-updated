@@ -1,13 +1,14 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import Photo from './Photo'
 import Comments from './Comments'
 
 export default class Single extends React.Component {
   static propTypes = {
-    params: React.PropTypes.object.isRequired,
-    posts: React.PropTypes.array,
-    comments: React.PropTypes.object
+    params: PropTypes.object.isRequired,
+    posts: PropTypes.array,
+    comments: PropTypes.object
   }
 
   render() {

@@ -8,6 +8,7 @@ First
 - [ ] persist comments with firebase
 - [ ] authenticate & personalize with firebase
 - [ ] conf flow
+- [x] try to get rid of transform-related deps
 - [x] fix eslint
 - [x] eject from cra
 - [x] fix hmr
