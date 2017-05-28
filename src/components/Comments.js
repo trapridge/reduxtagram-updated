@@ -16,7 +16,7 @@ export default class Comments extends React.Component {
             <div className="comment" key={i}>
               <p>
                 <strong>{comment.user}</strong>
-                {comment.text}
+                {comment.text} :)
                 <button onClick={this.handleCommentRemove.bind(this, i)} 
                   className="remove-comment">&times;</button>
               </p>

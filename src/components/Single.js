@@ -14,7 +14,7 @@ export default class Single extends React.Component {
     const id = this.props.params.postId
     const index = this.props.posts.findIndex(post => post.code === id)
     const post = this.props.posts[index]
-    const postComments = this.props.comments[id] || []
+    const postComments = this.props.comments[id] || []
     return (
       <div className="single-photo">
         <Photo {...this.props} i={index} post={post}/>
