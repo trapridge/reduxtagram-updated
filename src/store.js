@@ -11,6 +11,8 @@ import comments from './data/comments'
 const defaultState = { posts, comments }
 
 let middleware = applyMiddleware(thunk)
+
+/*eslint no-undef:0*/
 if (process.env.NODE_ENV !== 'production' && window.devToolsExtension) {
   middleware = compose(middleware, window.devToolsExtension())
 }
@@ -19,9 +21,8 @@ export const store = createStore(rootReducer, defaultState, middleware)
 export const history = syncHistoryWithStore(browserHistory, store)
 
 if (module.hot) {
-  console.log('module is hot')
   module.hot.accept('./reducers/', () => {
-    const nextRootReducer = require('./reducers/index').rootReducer
+    const nextRootReducer = require('./reducers/index.js').rootReducer
     store.replaceReducer(nextRootReducer)
   })
 }

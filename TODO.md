@@ -2,16 +2,17 @@
 
 First
 
-- [ ] fix hmr
 - [ ] update deps to same as cotd
 - [ ] unit tests
 - [ ] e2e tests
 - [ ] persist comments with firebase
 - [ ] authenticate & personalize with firebase
 - [ ] use flow?
-- [ ] eject from cra?
+- [x] fix eslint
+- [x] eject from cra
+- [x] fix hmr
 - [x] update devDeps & setup to same as cotd
-- [X] propTypes
+- [x] propTypes
 
 Second
 
