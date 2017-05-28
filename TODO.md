@@ -2,6 +2,7 @@
 
 First
 
+- [ ] fix hmr
 - [ ] update deps to same as cotd
 - [ ] unit tests
 - [ ] e2e tests
