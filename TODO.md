@@ -7,7 +7,7 @@ First
 - [ ] e2e tests
 - [ ] persist comments with firebase
 - [ ] authenticate & personalize with firebase
-- [ ] use flow?
+- [ ] conf flow
 - [x] fix eslint
 - [x] eject from cra
 - [x] fix hmr
