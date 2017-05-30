@@ -2,11 +2,8 @@
 
 First
 
-- [ ] update deps to same as cotd
 - [ ] unit tests
 - [ ] e2e tests
-- [ ] persist comments with firebase
-- [ ] authenticate & personalize with firebase
 - [ ] conf flow
 - [x] try to get rid of transform-related deps
 - [x] fix eslint
@@ -17,6 +14,8 @@ First
 
 Second
 
+ * persist comments with firebase
+ * authenticate & personalize with firebase
  * make responsive
  * load images from e.g. flickr
  * upload images?
