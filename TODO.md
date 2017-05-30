@@ -2,6 +2,8 @@
 
 First
 
+- [ ] persist comments with firebase
+- [ ] authenticate & personalize with firebase
 - [ ] unit tests
 - [ ] e2e tests
 - [ ] conf flow
@@ -14,8 +16,6 @@ First
 
 Second
 
- * persist comments with firebase
- * authenticate & personalize with firebase
  * make responsive
  * load images from e.g. flickr
  * upload images?
