@@ -1,18 +1,32 @@
+import * as types from '../actions/actionTypes'
+
 export function posts(state = [], action) {
   switch (action.type) {
-    case 'INCREMENT_LIKES_SUCCESS': {
+    case types.INCREMENT_LIKES_SUCCESS: {
       const updatedPost = state[action.postId]
-      updatedPost.likes = action.newLikes
+      updatedPost.likes = action.newValue
       return {
         ...state, [action.postId]: updatedPost 
       }
     }
-    case 'LOAD_POSTS_SUCCESS': {
+
+    case types.INCREMENT_COMMENTS_SUCCESS:
+    case types.DECREMENT_COMMENTS_SUCCESS: {
+      const updatedPost = state[action.postId]
+      updatedPost.comments = action.newValue
+      return {
+        ...state, [action.postId]: updatedPost 
+      }
+    }
+
+    case types.LOAD_POSTS_SUCCESS: {
       return { ...state, ...action.payload }
     }
-    case 'LOAD_POST_SUCCESS': {
+
+    case types.LOAD_POST_SUCCESS: {
       return { ...state, [action.postId]: action.payload }
     }
+
     default: {
       return state  
     }

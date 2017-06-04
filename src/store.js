@@ -6,10 +6,6 @@ import logger from 'redux-logger'
 
 import { rootReducer } from './reducers/index'
 
-import posts from './data/posts'
-import comments from './data/comments'
-
-// const defaultState = { posts, comments }
 const defaultState = { posts: {}, comments: {}}
 
 let middleware = applyMiddleware(thunk, logger)
@@ -28,10 +24,3 @@ if (module.hot) {
     store.replaceReducer(nextRootReducer)
   })
 }
-
-// if (module.hot) {
-//   module.hot.accept('./actions/', () => {
-//     const nextRootReducer = require('./actions/actionCreators.js').
-//     store.replaceReducer(nextRootReducer)
-//   })
-// }

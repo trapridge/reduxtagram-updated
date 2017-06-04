@@ -9,14 +9,6 @@ export default class Comments extends React.Component {
     removeComment: PropTypes.func.isRequired,
   }
 
-  componentDidMount() {
-    this.props.startCommentsSync(this.props.params.postId)
-  }
-
-  componentWillUnmount() {
-    this.props.stopCommentsSync(this.props.params.postId)
-  }
-
   render() {
     const { comments, id } = this.props
 
@@ -45,23 +37,19 @@ export default class Comments extends React.Component {
     )
   }
 
-  handleGetComments() {
-    console.log('yey')
-    console.log(this.props.getComments())
-  }
-
   handleCommentRemove(commentId) {
     const { postId } = this.props.params
     this.props.removeComment(commentId, postId)
+    this.props.decrementComments(postId)
     Raven.captureMessage('Comment removed')
   }
 
   handleSubmit(e) {
     e.preventDefault()
     const { postId } = this.props.params
-    const author = this.refs.author.value
-    const comment = this.refs.comment.value
-    this.props.addComment(postId, author, comment)
+    const { author, comment } = this.refs
+    this.props.addComment(postId, author.value, comment.value)
+    this.props.incrementComments(postId)
     this.refs.commentForm.reset()
   }
 }

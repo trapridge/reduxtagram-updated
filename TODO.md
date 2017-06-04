@@ -2,11 +2,10 @@
 
 First
 
-- [ ] persist comments with firebase
 - [ ] authenticate & personalize with firebase
 - [ ] unit tests
 - [ ] e2e tests
-- [ ] conf flow
+- [x] persist comments with firebase
 - [x] try to get rid of transform-related deps
 - [x] fix eslint
 - [x] eject from cra
@@ -16,6 +15,8 @@ First
 
 Second
 
- * make responsive
+ * change and load sample data
  * load images from e.g. flickr
  * upload images?
+ * revamp ui
+ * make responsive

@@ -5,6 +5,7 @@ let commentsSubscription
 
 export function startCommentsSync(postId) {
   return dispatch => {
+    dispatch({ type: types.START_COMMENTS_SYNC_STARTED })
     commentsSubscription = 
       db.ref(`comments/${postId}`).on('value', snapshot => {
         dispatch({ 

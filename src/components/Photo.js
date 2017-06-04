@@ -8,15 +8,8 @@ export default class Photo extends React.Component {
     // i: PropTypes.number.isRequired,
     // post: PropTypes.object.isRequired,
     // comments: PropTypes.object.isRequired,
-    increment: PropTypes.func.isRequired
+    incrementLikes: PropTypes.func.isRequired
   }
-
-  // shouldComponentUpdate(nextProps) {
-  //   console.log('dsdsdsdsd')
-  //   console.log(nextProps)
-  //   return Object.keys(nextProps.post).length > 0 && 
-  //     Object.keys(nextProps.id).length > 0
-  // }
 
   render() {
     const { post, id } = this.props
@@ -42,13 +35,13 @@ export default class Photo extends React.Component {
           </figcaption>
 
           <div className="control-buttons">
-            <button className="likes" onClick={this.props.increment.bind(null, id)} >
+            <button className="likes" onClick={this.props.incrementLikes.bind(null, id)} >
               &hearts; {post.likes}
             </button>
             <Link className="button" to={`/view/${id}`}>
               <span className="comment-count">
                 <span className="speech-bubble">
-                </span> {post.comment_count}{/*comments[post.code] ? comments[post.code].length: 0*/}
+                </span> {post.comments}
               </span>
             </Link>
           </div>

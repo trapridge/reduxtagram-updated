@@ -13,23 +13,20 @@ export default class Single extends React.Component {
 
   componentWillMount() {
     const postId = this.props.params.postId
-    // this.props.loadComments(postId)
 
     if (Object.keys(this.props.posts).length === 0) {
       this.props.loadPost(postId)
     }
+    this.props.startCommentsSync(postId)
   }
 
-  // shouldComponentUpdate(nextProps) {
-  //   return Object.keys(nextProps.posts).length > 0 && 
-  //     Object.keys(nextProps.comments).length > 0
-  // }
+  componentWillUnmount() {
+    this.props.stopCommentsSync(this.props.params.postId)
+  }
 
   render() {
     const postId = this.props.params.postId
-    // const index = this.props.posts.findIndex(post => post.code === id)
     const post = this.props.posts[postId]
-    // const postComments = this.props.comments[id] || []
 
     if (postId && post) {
       return (
