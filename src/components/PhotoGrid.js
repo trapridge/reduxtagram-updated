@@ -5,15 +5,20 @@ import Photo from './Photo'
 
 export default class PhotoGrid extends React.Component {
   static propTypes = {
-    posts: PropTypes.array
+    posts: PropTypes.object
+  }
+
+  componentDidMount() {
+    this.props.loadPosts()
   }
 
   render() {
     return (
       <div className="photo-grid">
-      {this.props.posts.map((post, i) => {
-        return <Photo {...this.props} key={i} i={i} post={post}/> 
-      })}
+        {Object.keys(this.props.posts).map((key, i) => 
+          <Photo {...this.props} key={key} id={key} 
+            post={this.props.posts[key]}/>
+        )}
       </div>
     )
   }

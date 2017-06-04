@@ -4,21 +4,32 @@ import Raven from 'raven-js'
 
 export default class Comments extends React.Component {
   static propTypes = {
-    postComments: PropTypes.array.isRequired,
+    comments: PropTypes.object.isRequired,
     addComment: PropTypes.func.isRequired,
     removeComment: PropTypes.func.isRequired,
   }
 
+  componentDidMount() {
+    this.props.startCommentsSync(this.props.params.postId)
+  }
+
+  componentWillUnmount() {
+    this.props.stopCommentsSync(this.props.params.postId)
+  }
+
   render() {
+    const { comments, id } = this.props
+
     return (
       <div className="comments">
-        {this.props.postComments.map((comment, i) => {
+        {Object.keys(comments).map((key, i) => {
+          const comment = comments[key]
           return (
             <div className="comment" key={i}>
               <p>
                 <strong>{comment.user}</strong>
                 {comment.text}
-                <button onClick={this.handleCommentRemove.bind(this, i)} 
+                <button onClick={this.handleCommentRemove.bind(this, key, id)} 
                   className="remove-comment">&times;</button>
               </p>
             </div>
@@ -34,9 +45,14 @@ export default class Comments extends React.Component {
     )
   }
 
+  handleGetComments() {
+    console.log('yey')
+    console.log(this.props.getComments())
+  }
+
   handleCommentRemove(commentId) {
     const { postId } = this.props.params
-    this.props.removeComment(postId, commentId)
+    this.props.removeComment(commentId, postId)
     Raven.captureMessage('Comment removed')
   }
 

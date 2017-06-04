@@ -1,29 +1,17 @@
-function postComments(state = [], action) {
-  switch (action.type) {
-  case 'ADD_COMMENT':
-    return [
-      ...state,
-      {
-        user: action.author,
-        text: action.comment
-      }
-    ]
-  case 'REMOVE_COMMENT':
-    return [
-      ...state.slice(0, action.commentId),
-      ...state.slice(action.commentId + 1)
-    ]
-  default:
-    return state
-  }
-}
+import * as types from '../actions/actionTypes'
 
-export function comments(state = [], action) {
-  if (typeof action.postId !== 'undefined') {
-    return {
-      ...state,
-      [action.postId]: postComments(state[action.postId], action)
+export function comments(state = {}, action) {
+  switch (action.type) {
+    case types.CLEAR_COMMENTS: {
+      return {}  
+    }
+    case types.START_COMMENTS_SYNC_SUCCESS: {
+      return {
+        ...action.payload
+      }  
+    }
+    default: {
+      return state      
     }
   }
-  return state
 }
