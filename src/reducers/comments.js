@@ -7,9 +7,10 @@ export function comments(state = {}, action) {
     }
 
     case types.START_COMMENTS_SYNC_SUCCESS: {
-      return {
-        ...action.payload
-      }  
+      if (action.payload) {
+        return { ...state, [action.postId]: action.payload }  
+      }
+      return state
     }
     
     default: {

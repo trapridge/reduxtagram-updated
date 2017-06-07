@@ -7,14 +7,14 @@ import Comments from './Comments'
 export default class Single extends React.Component {
   static propTypes = {
     params: PropTypes.object.isRequired,
-    // posts: PropTypes.array,
-    // comments: PropTypes.object
+    posts: PropTypes.object,
+    comments: PropTypes.object
   }
 
   componentWillMount() {
     const postId = this.props.params.postId
 
-    if (Object.keys(this.props.posts).length === 0) {
+    if (!(postId in this.props.posts)) {
       this.props.loadPost(postId)
     }
     this.props.startCommentsSync(postId)
@@ -28,16 +28,16 @@ export default class Single extends React.Component {
     const postId = this.props.params.postId
     const post = this.props.posts[postId]
 
-    if (postId && post) {
-      return (
-        <div className="single-photo">
-          <Photo {...this.props} id={postId} post={post}/>
-          <Comments {...this.props} id={postId}/>
-        </div>
-      )
-    }
-    else {
-      return <div></div>
-    }
+    // if (postId && post) {
+    return (
+      <div className="single-photo">
+        <Photo {...this.props} id={postId} post={post}/>
+        <Comments {...this.props} id={postId}/>
+      </div>
+    )
+    // }
+    // else {
+    //   return <div></div>
+    // }
   }
 }

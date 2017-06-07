@@ -1,4 +1,3 @@
-import Rebase from 're-base'
 import firebase from 'firebase'
 
 export const firebaseConfig = {
@@ -11,7 +10,6 @@ export const firebaseConfig = {
 }
 
 firebase.initializeApp(firebaseConfig)
-export const db = firebase.database()
 
-// const base = Rebase.createClass(firebaseConfig)
-// export default base
+export const db = firebase.database
+export const auth = firebase.auth

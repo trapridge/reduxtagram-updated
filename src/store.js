@@ -6,7 +6,8 @@ import logger from 'redux-logger'
 
 import { rootReducer } from './reducers/index'
 
-const defaultState = { posts: {}, comments: {}}
+const persistedState = localStorage.getItem('state') ? 
+  JSON.parse(localStorage.getItem('state')) : {}
 
 let middleware = applyMiddleware(thunk, logger)
 
@@ -15,8 +16,12 @@ if (process.env.NODE_ENV !== 'production' && window.devToolsExtension) {
   middleware = compose(middleware, window.devToolsExtension())
 }
 
-export const store = createStore(rootReducer, defaultState, middleware)
+export const store = createStore(rootReducer, persistedState, middleware)
 export const history = syncHistoryWithStore(browserHistory, store)
+
+store.subscribe(() => {
+  localStorage.setItem('state', JSON.stringify(store.getState()))
+})
 
 if (module.hot) {
   module.hot.accept('./reducers/', () => {

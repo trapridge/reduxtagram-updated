@@ -7,10 +7,22 @@ export default class Comments extends React.Component {
     comments: PropTypes.object.isRequired,
     addComment: PropTypes.func.isRequired,
     removeComment: PropTypes.func.isRequired,
+    incrementComments: PropTypes.func.isRequired,
+    decrementComments: PropTypes.func.isRequired
   }
 
   render() {
-    const { comments, id } = this.props
+    console.log(this.props)
+    let { comments, id, userData } = this.props
+    comments = id in comments ? comments[id] : {}
+
+    const addForm = !('user' in userData) ? '' : 
+      <form onSubmit={this.handleSubmit.bind(this)} ref="commentForm" 
+        className="comment-form">
+        <input type="text" ref="author" placeholder="Author"/>
+        <input type="text" ref="comment" placeholder="Comment"/>
+        <input type="submit" hidden/>
+      </form>
 
     return (
       <div className="comments">
@@ -27,12 +39,7 @@ export default class Comments extends React.Component {
             </div>
           )
         })}
-        <form onSubmit={this.handleSubmit.bind(this)} ref="commentForm" 
-          className="comment-form">
-          <input type="text" ref="author" placeholder="Author"/>
-          <input type="text" ref="comment" placeholder="Comment"/>
-          <input type="submit" hidden/> {/* to enable enter key */}
-        </form>
+        {addForm}
       </div>
     )
   }
@@ -41,7 +48,7 @@ export default class Comments extends React.Component {
     const { postId } = this.props.params
     this.props.removeComment(commentId, postId)
     this.props.decrementComments(postId)
-    Raven.captureMessage('Comment removed')
+    // Raven.captureMessage('Comment removed')
   }
 
   handleSubmit(e) {

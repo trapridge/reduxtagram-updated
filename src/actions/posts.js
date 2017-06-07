@@ -4,7 +4,7 @@ import * as types from './actionTypes'
 export function loadPosts() {
   return dispatch => {
     dispatch({ type: types.LOAD_POSTS_STARTED })
-    db.ref('posts').once('value', snapshot => {
+    db().ref('posts').once('value', snapshot => {
       dispatch({ type: types.LOAD_POSTS_SUCCESS, payload: snapshot.val() })
     }, error => {
       dispatch({ type: types.LOAD_POSTS_FAILURE, payload: error })
@@ -15,7 +15,7 @@ export function loadPosts() {
 export function loadPost(postId) {
   return dispatch => {
     dispatch({ type: types.LOAD_POST_STARTED })
-    db.ref(`posts/${postId}`).once('value', snapshot => {
+    db().ref(`posts/${postId}`).once('value', snapshot => {
       dispatch({ 
         type: types.LOAD_POST_SUCCESS, 
         payload: snapshot.val(),
@@ -31,7 +31,7 @@ export function incrementLikes(postId) {
   return async (dispatch) => {
     dispatch({ type: types.INCREMENT_LIKES_STARTED}) 
     try {
-      const transActionResult = await db.ref(`posts/${postId}/likes`)
+      const transActionResult = await db().ref(`posts/${postId}/likes`)
         .transaction(currentLikes => currentLikes + 1)
 
       if (transActionResult.committed) {
@@ -55,24 +55,24 @@ export function incrementLikes(postId) {
 
 export function incrementComments(postId) {
   return async (dispatch) => {
-    dispatch({ type: 'INCREMENT_COMMENTS_STARTED'}) 
+    dispatch({ type: types.INCREMENT_COMMENTS_STARTED }) 
     try {
-      const transActionResult = await db.ref(`posts/${postId}/comments`)
+      const transActionResult = await db().ref(`posts/${postId}/comments`)
         .transaction(currentComments => currentComments + 1)
 
       if (transActionResult.committed) {
         dispatch({ 
-          type: 'INCREMENT_COMMENTS_SUCCESS', 
+          type: types.INCREMENT_COMMENTS_SUCCESS, 
           postId,
           newValue: transActionResult.snapshot.val()
         })
       }
       else {
-        dispatch({ type: 'INCREMENT_COMMENTS_NOT_COMMITTED'}) 
+        dispatch({ type: types.INCREMENT_COMMENTS_NOT_COMMITTED }) 
       }
     } catch (error) {
       dispatch({ 
-        type: 'INCREMENT_COMMENTS_ERROR',
+        type: types.INCREMENT_COMMENTS_FAILURE,
         payload: error
       }) 
     }
@@ -81,24 +81,24 @@ export function incrementComments(postId) {
 
 export function decrementComments(postId) {
   return async (dispatch) => {
-    dispatch({ type: 'DECREMENT_COMMENTS_STARTED'}) 
+    dispatch({ type: types.DECREMENT_COMMENTS_STARTED}) 
     try {
       const transActionResult = await db.ref(`posts/${postId}/comments`)
         .transaction(currentComments => currentComments - 1)
 
       if (transActionResult.committed) {
         dispatch({ 
-          type: 'DECREMENT_COMMENTS_SUCCESS', 
+          type: types.DECREMENT_COMMENTS_SUCCESS, 
           postId,
           newValue: transActionResult.snapshot.val()
         })
       }
       else {
-        dispatch({ type: 'DECREMENT_COMMENTS_NOT_COMMITTED'}) 
+        dispatch({ type: types.DECREMENT_COMMENTS_NOT_COMMITTED }) 
       }
     } catch (error) {
       dispatch({ 
-        type: 'DECREMENT_COMMENTS_ERROR',
+        type: types.DECREMENT_COMMENTS_FAILURE,
         payload: error
       }) 
     }
