@@ -5,7 +5,8 @@ import Photo from './Photo'
 
 export default class PhotoGrid extends React.Component {
   static propTypes = {
-    posts: PropTypes.object
+    posts: PropTypes.object.isRequired,
+    loadPosts: PropTypes.func.isRequired
   }
 
   componentDidMount() {

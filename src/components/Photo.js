@@ -7,7 +7,7 @@ const Photo = ({ post, id, incrementLikes }) => {
   return (
     <figure className="grid-figure">
       <div className="grid-photo-wrap">
-        <Link to={`/view/${id}`}>
+        <Link to={`/view/${id}`} className="image-link">
           <img className="grid-photo" src={post.display_src} 
             alt={post.caption}/>
         </Link>
