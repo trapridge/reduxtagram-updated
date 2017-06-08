@@ -4,36 +4,50 @@ import Raven from 'raven-js'
 
 export default class Comments extends React.Component {
   static propTypes = {
-    comments: PropTypes.object.isRequired,
-    addComment: PropTypes.func.isRequired,
-    removeComment: PropTypes.func.isRequired,
-    incrementComments: PropTypes.func.isRequired,
-    decrementComments: PropTypes.func.isRequired
+    comments: PropTypes.object,
+    userData: PropTypes.object,
+    addComment: PropTypes.func,
+    removeComment: PropTypes.func,
+    incrementComments: PropTypes.func,
+    decrementComments: PropTypes.func,
+  }
+
+  handleCommentRemove(commentId, postId) {
+    this.props.removeComment(commentId, postId)
+    this.props.decrementComments(postId)
+    // Raven.captureMessage('Comment removed')
+  }
+
+  handleSubmit(e, postId) {
+    e.preventDefault()
+    const { author, comment } = this.refs
+    this.props.addComment(postId, author.value, comment.value)
+    this.props.incrementComments(postId)
+    this.refs.commentForm.reset()
   }
 
   render() {
-    console.log(this.props)
     let { comments, id, userData } = this.props
-    comments = id in comments ? comments[id] : {}
+    const postComments = comments[id] || {}
 
-    const addForm = !('user' in userData) ? '' : 
-      <form onSubmit={this.handleSubmit.bind(this)} ref="commentForm" 
+    const addForm = 'user' in userData ? 
+      <form onSubmit={(e) => this.handleSubmit(e, id)} ref="commentForm" 
         className="comment-form">
         <input type="text" ref="author" placeholder="Author"/>
         <input type="text" ref="comment" placeholder="Comment"/>
         <input type="submit" hidden/>
-      </form>
+      </form> : ''
 
     return (
       <div className="comments">
-        {Object.keys(comments).map((key, i) => {
-          const comment = comments[key]
+        {Object.keys(postComments).map((key, i) => {
+          const comment = postComments[key]
           return (
             <div className="comment" key={i}>
               <p>
                 <strong>{comment.user}</strong>
                 {comment.text}
-                <button onClick={this.handleCommentRemove.bind(this, key, id)} 
+                <button onClick={() => this.handleCommentRemove(key, id)} 
                   className="remove-comment">&times;</button>
               </p>
             </div>
@@ -44,19 +58,5 @@ export default class Comments extends React.Component {
     )
   }
 
-  handleCommentRemove(commentId) {
-    const { postId } = this.props.params
-    this.props.removeComment(commentId, postId)
-    this.props.decrementComments(postId)
-    // Raven.captureMessage('Comment removed')
-  }
 
-  handleSubmit(e) {
-    e.preventDefault()
-    const { postId } = this.props.params
-    const { author, comment } = this.refs
-    this.props.addComment(postId, author.value, comment.value)
-    this.props.incrementComments(postId)
-    this.refs.commentForm.reset()
-  }
 }

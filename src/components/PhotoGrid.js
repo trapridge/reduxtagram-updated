@@ -9,16 +9,20 @@ export default class PhotoGrid extends React.Component {
     loadPosts: PropTypes.func
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.props.loadPosts()
   }
 
   render() {
+    const { posts, incrementLikes } = this.props 
     return (
       <div className="photo-grid">
-        {Object.keys(this.props.posts).map((key, i) => 
-          <Photo {...this.props} key={key} id={key} 
-            post={this.props.posts[key]}/>
+        {Object.keys(posts).map(key => 
+          <Photo 
+            key={key} 
+            id={key}
+            post={posts[key]}
+            incrementLikes={incrementLikes} />
         )}
       </div>
     )

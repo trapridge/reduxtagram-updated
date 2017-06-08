@@ -39,9 +39,9 @@ const Photo = ({ post, id, incrementLikes }) => {
 }
 
 Photo.propTypes = {
-  post: PropTypes.object.isRequired,
-  id: PropTypes.string.isRequired,
-  incrementLikes: PropTypes.func.isRequired
+  post: PropTypes.object,
+  id: PropTypes.string,
+  incrementLikes: PropTypes.func
 }
 
 export default Photo

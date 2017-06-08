@@ -6,38 +6,45 @@ import Comments from './Comments'
 
 export default class Single extends React.Component {
   static propTypes = {
-    params: PropTypes.object.isRequired,
+    params: PropTypes.object,
     posts: PropTypes.object,
-    comments: PropTypes.object
+    comments: PropTypes.object,
+    loadPost: PropTypes.func,
+    startCommentsSync: PropTypes.func,
+    stopCommentsSync: PropTypes.func,
   }
 
   componentWillMount() {
-    const postId = this.props.params.postId
+    const { postId } = this.props.params
+    const { posts, loadPost, startCommentsSync } = this.props
 
-    if (!(postId in this.props.posts)) {
-      this.props.loadPost(postId)
+    if (!(postId in posts)) {
+      loadPost(postId)
     }
-    this.props.startCommentsSync(postId)
+    startCommentsSync(postId)
   }
 
   componentWillUnmount() {
-    this.props.stopCommentsSync(this.props.params.postId)
+    const { postId } = this.props.params
+    const { stopCommentsSync } = this.props
+    stopCommentsSync(postId)
   }
 
   render() {
-    const postId = this.props.params.postId
-    const post = this.props.posts[postId]
-
-    // if (postId && post) {
+    const { postId } = this.props.params
+    const { posts, incrementLikes, ...otherProps } = this.props
+    const post = posts[postId]
+    
     return (
       <div className="single-photo">
-        <Photo {...this.props} id={postId} post={post}/>
-        <Comments {...this.props} id={postId}/>
+        <Photo 
+          id={postId} 
+          post={post} 
+          incrementLikes={incrementLikes} />
+        <Comments 
+          id={postId}
+          {...otherProps} />
       </div>
     )
-    // }
-    // else {
-    //   return <div></div>
-    // }
   }
 }

@@ -6,6 +6,8 @@ import PhotoGrid from './PhotoGrid'
 const minProps = { 
   posts: {}, 
   loadPosts: jest.fn(),
+
+  // needed by children
   incrementLikes: () => {}
 }
 
@@ -19,9 +21,9 @@ describe('PhotoGrid', () => {
       const props = { 
         ...minProps, 
         posts: {  
-          a: { id: 'a', post: {}, incrementLikes: () => {} }, 
-          b: { id: 'a', post: {}, incrementLikes: () => {} }, 
-          c: { id: 'a', post: {}, incrementLikes: () => {} }
+          a: { id: 'a', post: {} }, 
+          b: { id: 'a', post: {} }, 
+          c: { id: 'a', post: {} }
         } 
       }
       const wrapper = shallow(<PhotoGrid {...props} />)
@@ -34,11 +36,11 @@ describe('PhotoGrid', () => {
   })
 
   describe('INTERACTION', () => {
-    describe('componentDidMount', () => {
+    describe('componentWillMount', () => {
       const wrapper = shallow(<PhotoGrid {...minProps} />)
       
       beforeEach(() => {
-        wrapper.instance().componentDidMount()
+        wrapper.instance().componentWillMount()
       })
 
       it('should call loadPosts', () => {
