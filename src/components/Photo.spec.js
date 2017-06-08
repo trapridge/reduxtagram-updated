@@ -7,7 +7,6 @@ const minProps = { post: {}, id: '', incrementLikes: () => {} }
 
 describe('Photo', () => {
   describe('RENDERING', () => {
-
     it('renders without crashing', () => {
       shallow(<Photo {...minProps} />)
     })
@@ -74,7 +73,6 @@ describe('Photo', () => {
 
   describe('INTERACTION', () => {
     describe('clicking likes button', () => {
-      
       const props = { ...minProps, incrementLikes: jest.fn(), id: 'foo' }
       const wrapper = shallow(<Photo {...props } />)
       

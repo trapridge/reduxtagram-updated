@@ -33,7 +33,7 @@ const Photo = ({ post, id, incrementLikes }) => {
             </span> {post.comments}
           </span>
         </Link>
-      </div>””
+      </div>
     </figure>
   )
 }
