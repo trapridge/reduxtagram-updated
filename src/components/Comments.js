@@ -4,33 +4,40 @@ import Raven from 'raven-js'
 
 export default class Comments extends React.Component {
   static propTypes = {
+    id: PropTypes.string,
     comments: PropTypes.object,
     userData: PropTypes.object,
     addComment: PropTypes.func,
     removeComment: PropTypes.func,
     incrementComments: PropTypes.func,
-    decrementComments: PropTypes.func,
+    decrementComments: PropTypes.func
   }
 
   handleCommentRemove(commentId, postId) {
-    this.props.removeComment(commentId, postId)
-    this.props.decrementComments(postId)
+    const { removeComment, decrementComments } = this.props 
+    removeComment(commentId, postId)
+    decrementComments(postId)
     // Raven.captureMessage('Comment removed')
   }
 
-  handleSubmit(e, postId) {
-    e.preventDefault()
-    const { author, comment } = this.refs
-    this.props.addComment(postId, author.value, comment.value)
-    this.props.incrementComments(postId)
-    this.refs.commentForm.reset()
+  handleSubmit(event, postId) {
+    event.preventDefault()
+    const { author, comment, commentForm } = this.refs
+    const { addComment, incrementComments } = this.props 
+    addComment(postId, author.value, comment.value)
+    incrementComments(postId)
+    commentForm.reset()
+  }
+
+  userIsLoggedIn() {
+    return 'user' in this.props.userData
   }
 
   render() {
-    let { comments, id, userData } = this.props
+    let { comments, id } = this.props
     const postComments = comments[id] || {}
 
-    const addForm = 'user' in userData ? 
+    const addForm = this.userIsLoggedIn() ? 
       <form onSubmit={(e) => this.handleSubmit(e, id)} ref="commentForm" 
         className="comment-form">
         <input type="text" ref="author" placeholder="Author"/>

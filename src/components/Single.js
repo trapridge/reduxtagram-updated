@@ -32,7 +32,16 @@ export default class Single extends React.Component {
 
   render() {
     const { postId } = this.props.params
-    const { posts, incrementLikes, ...otherProps } = this.props
+    const { 
+      posts, 
+      incrementLikes,
+      comments,
+      userData,
+      addComment,
+      removeComment,
+      incrementComments,
+      decrementComments
+    } = this.props
     const post = posts[postId]
     
     return (
@@ -43,7 +52,12 @@ export default class Single extends React.Component {
           incrementLikes={incrementLikes} />
         <Comments 
           id={postId}
-          {...otherProps} />
+          comments={comments}
+          userData={userData}
+          addComment={addComment}
+          removeComment={removeComment}
+          incrementComments={incrementComments}
+          decrementComments={decrementComments} />
       </div>
     )
   }
