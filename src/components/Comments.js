@@ -64,6 +64,4 @@ export default class Comments extends React.Component {
       </div>
     )
   }
-
-
 }
