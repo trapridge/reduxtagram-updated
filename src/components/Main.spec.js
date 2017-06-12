@@ -57,7 +57,7 @@ describe('Comments', () => {
         wrapper.find('.logout-button').prop('onClick')()    
       })
 
-      it('should call login with provider name', () => {
+      it('should call logout', () => {
         expect(minProps.logout).toBeCalled()
       })
     })
