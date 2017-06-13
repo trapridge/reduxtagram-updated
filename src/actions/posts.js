@@ -1,5 +1,12 @@
-import { db } from '../base'
+import { getDb } from '../base'
 import * as types from './actionTypes'
+
+let db = getDb()
+
+export function useMockDb(mockDb) {
+  db = mockDb
+  return db
+}
 
 export function loadPosts() {
   return dispatch => {
@@ -7,7 +14,7 @@ export function loadPosts() {
     db().ref('posts').once('value', snapshot => {
       dispatch({ type: types.LOAD_POSTS_SUCCESS, payload: snapshot.val() })
     }, error => {
-      dispatch({ type: types.LOAD_POSTS_FAILURE, payload: error })
+      dispatch({ type: types.LOAD_POSTS_FAILURE, payload: error, error: true })
     })
   }
 }
@@ -22,7 +29,7 @@ export function loadPost(postId) {
         postId
       })
     }, error => {
-      dispatch({ type: types.LOAD_POST_FAILURE, payload: error })
+      dispatch({ type: types.LOAD_POST_FAILURE, error })
     })
   }
 }
@@ -45,10 +52,7 @@ export function incrementLikes(postId) {
         dispatch({ type: types.INCREMENT_LIKES_NOT_COMMITTED })
       }
     } catch (error) {
-      dispatch({ 
-        type: types.INCREMENT_LIKES_FAILURE,
-        payload: error
-      }) 
+      dispatch({ type: types.INCREMENT_LIKES_FAILURE, error }) 
     }
   }
 }

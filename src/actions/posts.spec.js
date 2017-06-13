@@ -2,61 +2,43 @@ import { mockDb } from '../mockFirebase'
 import * as types from './actionTypes'
 import {
   useMockDb,
-  addComment,
-  startCommentsSync,
-  stopCommentsSync,
-  clearComments,
-  removeComment
-} from './comments'
+  loadPosts
+} from './posts'
 
 const db = useMockDb(mockDb())
 
-describe('comments action creators', () => {
+describe('posts action creators', () => {
   afterEach(() => {
     db().clearExpectations()
   })
 
   describe('startCommentsSync() action creator', () => {
-    it('should dispatch expected actions if sync succeeds', async () => {
+    it('should dispatch expected actions if loading succeeds', async () => {
       const expectedActions = [
-        [{ type: types.START_COMMENTS_SYNC_STARTED }], 
-        [{ 
-          type: types.START_COMMENTS_SYNC_SUCCESS, 
-          payload: 'data',
-          meta: { postId: 'a' },
-        }], 
+        [{ type: types.LOAD_POSTS_STARTED }], 
+        [{ type: types.LOAD_POSTS_SUCCESS, payload: 'data' }], 
       ]
 
       const dispatch = jest.fn()
 
-      db().expectOnSuccess({ 
-        payload: 'data',
-        meta: { postId: 'a' }, 
-      })
+      db().expectOnceSuccess({ payload: 'data' })
 
-      startCommentsSync('a')(dispatch)
+      loadPosts()(dispatch)
 
       expect(dispatch.mock.calls).toEqual(expectedActions)
     })
 
-    it('should dispatch expected actions if sync fails', async () => {
+    it('should dispatch expected actions if loading fails', async () => {
       const expectedActions = [
-        [{ type: types.START_COMMENTS_SYNC_STARTED }], 
-        [{ 
-          type: types.START_COMMENTS_SYNC_FAILURE, 
-          payload: 'problem',
-          error: true
-        }], 
+        [{ type: types.LOAD_POSTS_STARTED }], 
+        [{ type: types.LOAD_POSTS_FAILURE, payload: 'problem', error: true }], 
       ]
 
       const dispatch = jest.fn()
 
-      db().expectOnFailure({ 
-        payload: 'problem',
-        error: true 
-      })
+      db().expectOnceFailure({ payload: 'problem', error: true })
 
-      startCommentsSync('a')(dispatch)
+      loadPosts()(dispatch)
 
       expect(dispatch.mock.calls).toEqual(expectedActions)
     })

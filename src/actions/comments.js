@@ -12,15 +12,20 @@ export function useMockDb(mockDb) {
 export function startCommentsSync(postId) {
   return dispatch => {
     dispatch({ type: types.START_COMMENTS_SYNC_STARTED })
-    commentsSubscription = 
-      db().ref(`comments/${postId}`).on('value', snapshot => {
+    commentsSubscription = db().ref(`comments/${postId}`).on('value', 
+      snapshot => {
         dispatch({ 
           type: types.START_COMMENTS_SYNC_SUCCESS, 
           payload: snapshot.val(),
-          postId
+          meta: { postId }
         })
-      }, error => {
-        dispatch({ type: types.START_COMMENTS_SYNC_FAILURE, payload: error })   
+      }, 
+      error => {
+        dispatch({ 
+          type: types.START_COMMENTS_SYNC_FAILURE, 
+          payload: error, 
+          error: true 
+        })   
       })
   }
 }
