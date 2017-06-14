@@ -26,10 +26,10 @@ export function loadPost(postId) {
       dispatch({ 
         type: types.LOAD_POST_SUCCESS, 
         payload: snapshot.val(),
-        postId
+        meta: { postId }
       })
     }, error => {
-      dispatch({ type: types.LOAD_POST_FAILURE, error })
+      dispatch({ type: types.LOAD_POST_FAILURE, payload: error, error: true })
     })
   }
 }
@@ -44,8 +44,8 @@ export function incrementLikes(postId) {
       if (transActionResult.committed) {
         dispatch({ 
           type: types.INCREMENT_LIKES_SUCCESS, 
-          postId,
-          newValue: transActionResult.snapshot.val()
+          meta: { postId },
+          payload: transActionResult.snapshot.val()
         })
       }
       else {

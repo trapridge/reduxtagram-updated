@@ -2,7 +2,9 @@ import { mockDb } from '../mockFirebase'
 import * as types from './actionTypes'
 import {
   useMockDb,
-  loadPosts
+  loadPosts,
+  loadPost,
+  incrementLikes
 } from './posts'
 
 const db = useMockDb(mockDb())
@@ -12,8 +14,8 @@ describe('posts action creators', () => {
     db().clearExpectations()
   })
 
-  describe('startCommentsSync() action creator', () => {
-    it('should dispatch expected actions if loading succeeds', async () => {
+  describe('loadPosts() action creator', () => {
+    it('should dispatch expected actions if loading succeeds', () => {
       const expectedActions = [
         [{ type: types.LOAD_POSTS_STARTED }], 
         [{ type: types.LOAD_POSTS_SUCCESS, payload: 'data' }], 
@@ -28,7 +30,7 @@ describe('posts action creators', () => {
       expect(dispatch.mock.calls).toEqual(expectedActions)
     })
 
-    it('should dispatch expected actions if loading fails', async () => {
+    it('should dispatch expected actions if loading fails', () => {
       const expectedActions = [
         [{ type: types.LOAD_POSTS_STARTED }], 
         [{ type: types.LOAD_POSTS_FAILURE, payload: 'problem', error: true }], 
@@ -44,33 +46,88 @@ describe('posts action creators', () => {
     })
   })
 
-  // describe('stopCommentsSync() action creator', () => {
-  //   it('should dispatch expected action', async () => {
-  //     const expectedActions = [
-  //       { type: types.STOP_COMMENTS_SYNC }
-  //     ]
+  describe('loadPost() action creator', () => {
+    it('should dispatch expected actions if loading succeeds', () => {
+      const expectedActions = [
+        [{ type: types.LOAD_POST_STARTED }], 
+        [{ 
+          type: types.LOAD_POST_SUCCESS, 
+          payload: 'data', 
+          meta: { postId: 'id'} 
+        }], 
+      ]
 
-  //     db().expectOff()
-  //     const action = stopCommentsSync()
+      const dispatch = jest.fn()
 
-  //     expect([action]).toEqual(expectedActions)
-  //   })
-  // })
+      db().expectOnceSuccess({ payload: 'data', meta: { postId: 'id'} })
 
-  // describe('clearComments() action creator', () => {
-  //   it('should dispatch expected action', async () => {
-  //     const expectedActions = [
-  //       { type: types.CLEAR_COMMENTS }
-  //     ]
+      loadPost('id')(dispatch)
 
-  //     const action = clearComments()
+      expect(dispatch.mock.calls).toEqual(expectedActions)
+    })
 
-  //     expect([action]).toEqual(expectedActions)
-  //   })
-  // })
+    it('should dispatch expected actions if loading fails', () => {
+      const expectedActions = [
+        [{ type: types.LOAD_POST_STARTED }], 
+        [{ 
+          type: types.LOAD_POST_FAILURE, 
+          payload: 'data', 
+          error: true
+        }], 
+      ]
+
+      const dispatch = jest.fn()
+
+      db().expectOnceFailure({ payload: 'data', error: true })
+
+      loadPost('id')(dispatch)
+
+      expect(dispatch.mock.calls).toEqual(expectedActions)
+    })
+  })
+
+  describe('incrementLikes() action creator', () => {
+    it('should dispatch expected actions if op succeeds', async () => {
+      const expectedActions = [
+        [{ type: types.INCREMENT_LIKES_STARTED }], 
+        [{ 
+          type: types.INCREMENT_LIKES_SUCCESS, 
+          payload: 'data', 
+          meta: { postId: 'id'} 
+        }], 
+      ]
+
+      const dispatch = jest.fn()
+
+      db().expectTransactionSuccessAndCommitted({ 
+        payload: 'data', 
+        meta: { postId: 'id'}
+      })
+
+      await incrementLikes('id')(dispatch)
+
+      expect(dispatch.mock.calls).toEqual(expectedActions)
+    })
+
+    it(`should dispatch expected actions if op succeeds but fails 
+        to commit`, async () => {
+      const expectedActions = [
+        [{ type: types.INCREMENT_LIKES_STARTED }], 
+        [{ type: types.INCREMENT_LIKES_NOT_COMMITTED }], 
+      ]
+
+      const dispatch = jest.fn()
+
+      db().expectTransactionSuccessAndNotCommitted()
+
+      await incrementLikes('id')(dispatch)
+
+      expect(dispatch.mock.calls).toEqual(expectedActions)
+    })
+  })
 
   // describe('addComment() action creator', () => {
-  //   it('should dispatch expected actions when it succeeds', async () => {
+  //   it('should dispatch expected actions when it succeeds', () => {
   //     const expectedActions = [
   //       [{ type: types.ADD_COMMENT_STARTED }], 
   //       [{ type: types.ADD_COMMENT_SUCCESS }], 
@@ -85,7 +142,7 @@ describe('posts action creators', () => {
   //     expect(dispatch.mock.calls).toEqual(expectedActions)
   //   })
 
-  //   it('should dispatch expected actions when set() fails', async () => {
+  //   it('should dispatch expected actions when set() fails', () => {
   //     const expectedActions = [
   //       [{ type: types.ADD_COMMENT_STARTED }], 
   //       [{ type: types.ADD_COMMENT_FAILURE, error: 'problem' }], 
@@ -100,7 +157,7 @@ describe('posts action creators', () => {
   //     expect(dispatch.mock.calls).toEqual(expectedActions)
   //   })
 
-  //   it('should dispatch expected actions when push() fails', async () => {
+  //   it('should dispatch expected actions when push() fails', () => {
   //     const expectedActions = [
   //       [{ type: types.ADD_COMMENT_STARTED }], 
   //       [{ type: types.ADD_COMMENT_FAILURE, error: 'problem' }], 
@@ -116,7 +173,7 @@ describe('posts action creators', () => {
   // })
 
   // describe('removeComment() action creator', () => {
-  //   it('should dispatch expected actions when it succeeds', async () => {
+  //   it('should dispatch expected actions when it succeeds', () => {
   //     const expectedActions = [
   //       [{ type: types.REMOVE_COMMENT_STARTED }], 
   //       [{ type: types.REMOVE_COMMENT_SUCCESS }], 
@@ -130,7 +187,7 @@ describe('posts action creators', () => {
   //     expect(dispatch.mock.calls).toEqual(expectedActions)
   //   })
 
-  //   it('should dispatch expected actions when remove() fails', async () => {
+  //   it('should dispatch expected actions when remove() fails', () => {
   //     const expectedActions = [
   //       [{ type: types.REMOVE_COMMENT_STARTED }], 
   //       [{ type: types.REMOVE_COMMENT_FAILURE, error: 'problem' }], 

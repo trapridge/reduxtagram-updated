@@ -1,3 +1,5 @@
+// mocks some of Firebase JavaScript SDK's methods
+
 export function mockDb() {
   let expectations = []
 
@@ -9,13 +11,23 @@ export function mockDb() {
   const handlePromiseCallbacks = (resolve, reject, acceptedExpectations, 
       overrideResolveData = null, overrideRejectData = null) => {
     if (hasNextExpectation(acceptedExpectations[0])) {
-      const { type, ...rest } = expectations[0]
-      resolve(overrideResolveData || rest)
+      const { type, payload, ...rest } = expectations[0]
+      if (overrideResolveData) {
+        resolve(overrideResolveData)  
+      }
+      else {
+        resolve(payload, ...rest)
+      }
       consumeExpectation()
     } 
     else if (hasNextExpectation(acceptedExpectations[1])) {
-      const { type, ...rest } = expectations[0]
-      reject(overrideRejectData || rest)
+      const { type, payload, ...rest } = expectations[0]
+      if (overrideRejectData) {
+        reject(overrideRejectData)  
+      }
+      else {
+        reject(payload, ...rest)
+      }
       consumeExpectation()
     }
     else {
@@ -41,7 +53,7 @@ export function mockDb() {
     }
   }
 
-  const mockDb = () => {
+  return () => {
     const obj = {
       expectPushResolved: (data = {}) => {
         expectations.push({ type: 'PUSH_RESOLVE', ...data })
@@ -76,6 +88,24 @@ export function mockDb() {
       expectOnceFailure: (data = {}) => {
         expectations.push({ type: 'ONCE_FAILURE', ...data })
       },
+      expectTransactionSuccessAndCommitted: (data = {}) => {
+        expectations.push({ 
+          type: 'TRANSACTION_SUCCESS_AND_COMMITTED', 
+          ...data 
+        })
+      },
+      expectTransactionSuccessAndNotCommitted: (data = {}) => {
+        expectations.push({ 
+          type: 'TRANSACTION_SUCCESS_AND_NOT_COMMITTED', 
+          ...data 
+        })
+      },
+      expectTransactionFailure: (data = {}) => {
+        expectations.push({ 
+          type: 'TRANSACTION_FAILURE', 
+          ...data 
+        })
+      },
       clearExpectations: () => { 
         expectations = []
       },
@@ -101,7 +131,7 @@ export function mockDb() {
             }
             else {
               console.error(`Incorrect expectation. Found ${expectations[0]}, 
-                but expected OFF`)
+                but expected 'OFF'`)
             }
           },
           on: (type, success, error) => {
@@ -112,10 +142,36 @@ export function mockDb() {
             const acceptedExpectations = ['ONCE_SUCCESS', 'ONCE_FAILURE']
             handleCallBacks(type, success, error, acceptedExpectations)
           },
+          transaction: () => new Promise((resolve, reject) => {
+            if (hasNextExpectation('TRANSACTION_SUCCESS_AND_COMMITTED')) {
+              const { type, payload, ...rest } = expectations[0]
+              handlePromiseCallbacks(resolve, reject, 
+                ['TRANSACTION_SUCCESS_AND_COMMITTED'], { 
+                  snapshot: { 
+                    val: () => {
+                      return payload
+                    },
+                    rest
+                  },
+                  committed: true
+                }
+              )
+            }
+            else if (hasNextExpectation('TRANSACTION_SUCCESS_AND_NOT_COMMITTED')) {
+              const { type, payload, ...rest } = expectations[0]
+              handlePromiseCallbacks(resolve, reject, 
+                ['TRANSACTION_SUCCESS_AND_NOT_COMMITTED'], { 
+                  committed: false
+                }
+              ) 
+            }
+            else if (hasNextExpectation('TRANSACTION_SUCCESS_AND_NOT_COMMITTED')) {
+              //
+            }
+          })
         }
       }
     }
     return obj
   }
-  return mockDb
 }

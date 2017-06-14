@@ -47,7 +47,11 @@ export function addComment(postId, user, text) {
       await newComment.set({ user, text })
       dispatch({ type: types.ADD_COMMENT_SUCCESS })
     } catch (error) {
-      dispatch({ type: types.ADD_COMMENT_FAILURE, error })
+      dispatch({ 
+        type: types.ADD_COMMENT_FAILURE, 
+        payload: error, 
+        error: true 
+      })
     }
   }
 }
@@ -59,7 +63,11 @@ export function removeComment(commentId, postId) {
       await db().ref(`comments/${postId}/${commentId}`).remove()
       dispatch({ type: types.REMOVE_COMMENT_SUCCESS })
     } catch (error) { 
-      dispatch({ type: types.REMOVE_COMMENT_FAILURE, error })
+      dispatch({ 
+        type: types.REMOVE_COMMENT_FAILURE, 
+        payload: error, 
+        error: true 
+      })
     }
   }
 }
