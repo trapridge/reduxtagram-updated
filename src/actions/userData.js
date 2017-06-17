@@ -1,9 +1,18 @@
-import { auth } from '../base'
+import { getAuth } from '../base'
 import * as types from './actionTypes'
 
-export function login(provider) {
+let auth = getAuth()
+
+export function useMockAuth(mockAuth) {
+  auth = mockAuth
+  return auth
+}
+
+export function login(providerName) {
   return async dispatch => {
-    switch (provider) {
+    dispatch({ type: types.AUTHENTICATE_USER_STARTED })
+    let provider
+    switch (providerName) {
       case 'github':
         provider = new auth.GithubAuthProvider()
         break
@@ -13,8 +22,14 @@ export function login(provider) {
       case 'twitter':
         provider = new auth.TwitterAuthProvider()
         break
+      default:
+        dispatch({ 
+          type: types.AUTHENTICATE_USER_FAILURE,
+          payload: new Error(`Provider with name "${providerName}" not available`),
+          error: true
+        })
+        return
     }
-    dispatch({ type: types.AUTHENTICATE_USER_STARTED })
     try {
       const authData = await auth().signInWithPopup(provider)
       dispatch({ 
@@ -22,9 +37,13 @@ export function login(provider) {
         payload: authData
       })
     } catch (error) {
-      dispatch({ type: types.AUTHENTICATE_USER_FAILURE })
+      dispatch({ 
+        type: types.AUTHENTICATE_USER_FAILURE,
+        payload: error,
+        error: true
+      })
     }
-  }
+  } 
 } 
 
 export function logout() {
@@ -34,7 +53,11 @@ export function logout() {
       await auth().signOut()
       dispatch({ type: types.LOGOUT_USER_SUCCESS })
     } catch (error) {
-      dispatch({ type: types.LOGOUT_USER_FAILURE, error })
+      dispatch({ 
+        type: types.LOGOUT_USER_FAILURE, 
+        payload: error,
+        error: true
+      })
     }
   }
 }

@@ -52,7 +52,11 @@ export function incrementLikes(postId) {
         dispatch({ type: types.INCREMENT_LIKES_NOT_COMMITTED })
       }
     } catch (error) {
-      dispatch({ type: types.INCREMENT_LIKES_FAILURE, error }) 
+      dispatch({ 
+        type: types.INCREMENT_LIKES_FAILURE, 
+        payload: error, 
+        error: true 
+      }) 
     }
   }
 }
@@ -67,8 +71,8 @@ export function incrementComments(postId) {
       if (transActionResult.committed) {
         dispatch({ 
           type: types.INCREMENT_COMMENTS_SUCCESS, 
-          postId,
-          newValue: transActionResult.snapshot.val()
+          meta: { postId },
+          payload: transActionResult.snapshot.val()
         })
       }
       else {
@@ -77,7 +81,8 @@ export function incrementComments(postId) {
     } catch (error) {
       dispatch({ 
         type: types.INCREMENT_COMMENTS_FAILURE,
-        payload: error
+        payload: error,
+        error: true
       }) 
     }
   }
@@ -87,14 +92,14 @@ export function decrementComments(postId) {
   return async (dispatch) => {
     dispatch({ type: types.DECREMENT_COMMENTS_STARTED}) 
     try {
-      const transActionResult = await db.ref(`posts/${postId}/comments`)
+      const transActionResult = await db().ref(`posts/${postId}/comments`)
         .transaction(currentComments => currentComments - 1)
 
       if (transActionResult.committed) {
         dispatch({ 
           type: types.DECREMENT_COMMENTS_SUCCESS, 
-          postId,
-          newValue: transActionResult.snapshot.val()
+          meta: { postId },
+          payload: transActionResult.snapshot.val()
         })
       }
       else {
@@ -103,7 +108,8 @@ export function decrementComments(postId) {
     } catch (error) {
       dispatch({ 
         type: types.DECREMENT_COMMENTS_FAILURE,
-        payload: error
+        payload: error,
+        error: true
       }) 
     }
   }

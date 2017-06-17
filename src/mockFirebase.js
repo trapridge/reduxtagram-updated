@@ -1,60 +1,106 @@
 // mocks some of Firebase JavaScript SDK's methods
 
-export function mockDb() {
-  let expectations = []
+let expectations = []
 
-  const hasNextExpectation = type => 
-    expectations.length > 0 && expectations[0].type === type
+const hasNextExpectation = type => 
+  expectations.length > 0 && expectations[0].type === type
 
-  const consumeExpectation = () => expectations.splice(0, 1)
+const consumeExpectation = () => expectations.splice(0, 1)
 
-  const handlePromiseCallbacks = (resolve, reject, acceptedExpectations, 
-      overrideResolveData = null, overrideRejectData = null) => {
-    if (hasNextExpectation(acceptedExpectations[0])) {
-      const { type, payload, ...rest } = expectations[0]
-      if (overrideResolveData) {
-        resolve(overrideResolveData)  
-      }
-      else {
-        resolve(payload, ...rest)
-      }
-      consumeExpectation()
-    } 
-    else if (hasNextExpectation(acceptedExpectations[1])) {
-      const { type, payload, ...rest } = expectations[0]
-      if (overrideRejectData) {
-        reject(overrideRejectData)  
-      }
-      else {
-        reject(payload, ...rest)
-      }
-      consumeExpectation()
+const handlePromiseCallbacks = (resolve, reject, acceptedExpectations, 
+    overrideResolveData = null, overrideRejectData = null) => {
+  if (hasNextExpectation(acceptedExpectations[0])) {
+    const { type, payload, ...rest } = expectations[0]
+    if (overrideResolveData) {
+      resolve(overrideResolveData)  
     }
     else {
-      console.error(`Incorrect expectation. Found ${expectations[0]}, 
-        but expected one of ${acceptedExpectations}`)
+      resolve(payload, ...rest)
     }
-  }
-
-  const handleCallBacks = (type, success, error, acceptedExpectations) => {
-    if (hasNextExpectation(acceptedExpectations[0])) {
-      const { type, payload, ...rest } = expectations[0]
-      success({ val: () => payload, ...rest })
-      consumeExpectation()
-    }
-    else if (hasNextExpectation(acceptedExpectations[1])) {
-      const { type, payload, ...rest } = expectations[0]
-      error(payload, ...rest)  
-      consumeExpectation()
+    consumeExpectation()
+  } 
+  else if (hasNextExpectation(acceptedExpectations[1])) {
+    const { type, payload, ...rest } = expectations[0]
+    if (overrideRejectData) {
+      reject(overrideRejectData)  
     }
     else {
-      console.error(`Incorrect expectation. Found ${expectations[0]}, 
-        but expected one of ${acceptedExpectations}`)
+      reject(payload, ...rest)
     }
+    consumeExpectation()
   }
+  else {
+    console.error(`Incorrect expectation. Found ${expectations[0]}, 
+      but expected one of ${acceptedExpectations}`)
+  }
+}
 
+const handleCallBacks = (type, success, error, acceptedExpectations) => {
+  if (hasNextExpectation(acceptedExpectations[0])) {
+    const { type, payload, ...rest } = expectations[0]
+    success({ val: () => payload, ...rest })
+    consumeExpectation()
+  }
+  else if (hasNextExpectation(acceptedExpectations[1])) {
+    const { type, payload, ...rest } = expectations[0]
+    error(payload, ...rest)  
+    consumeExpectation()
+  }
+  else {
+    console.error(`Incorrect expectation. Found ${expectations[0]}, 
+      but expected one of ${acceptedExpectations}`)
+  }
+}
+
+const common = {
+  clearExpectations: () => { 
+    expectations = []
+  },
+}
+
+const mockAuth = () => {
+  const auth = () => {
+    const obj = {
+      ...common,
+      expectSignInWithPopupResolved: (data = {}) => {
+        expectations.push({ type: 'SIGN_IN_WITH_POPUP_RESOLVE', ...data })
+      },
+      expectSignInWithPopupRejected: (data = {}) => {
+        expectations.push({ type: 'SIGN_IN_WITH_POPUP_REJECT', ...data })
+      },
+      expectSignOutResolved: (data = {}) => {
+        expectations.push({ type: 'SIGN_OUT_RESOLVE', ...data })
+      },
+      expectSignOutRejected: (data = {}) => {
+        expectations.push({ type: 'SIGN_OUT_REJECT', ...data })
+      },
+      signInWithPopup: () => new Promise((resolve, reject) => {
+        const acceptedExpectations = [
+          'SIGN_IN_WITH_POPUP_RESOLVE', 
+          'SIGN_IN_WITH_POPUP_REJECT'
+        ]
+        handlePromiseCallbacks(resolve, reject, acceptedExpectations)
+      }),
+      signOut: () => new Promise((resolve, reject) => {
+        const acceptedExpectations = [
+          'SIGN_OUT_RESOLVE', 
+          'SIGN_OUT_REJECT'
+        ]
+        handlePromiseCallbacks(resolve, reject, acceptedExpectations)
+      }),
+    }
+    return obj
+  }
+  auth.GithubAuthProvider = function () {}
+  auth.GoogleAuthProvider = function () {}
+  auth.TwitterAuthProvider = function () {}
+  return auth
+}
+
+const mockDb = () => {
   return () => {
     const obj = {
+      ...common,
       expectPushResolved: (data = {}) => {
         expectations.push({ type: 'PUSH_RESOLVE', ...data })
       },
@@ -106,9 +152,6 @@ export function mockDb() {
           ...data 
         })
       },
-      clearExpectations: () => { 
-        expectations = []
-      },
       ref: (path) => {
         return {
           push: () => new Promise((resolve, reject) => {
@@ -157,7 +200,8 @@ export function mockDb() {
                 }
               )
             }
-            else if (hasNextExpectation('TRANSACTION_SUCCESS_AND_NOT_COMMITTED')) {
+            else if (hasNextExpectation(
+                'TRANSACTION_SUCCESS_AND_NOT_COMMITTED')) {
               const { type, payload, ...rest } = expectations[0]
               handlePromiseCallbacks(resolve, reject, 
                 ['TRANSACTION_SUCCESS_AND_NOT_COMMITTED'], { 
@@ -165,8 +209,8 @@ export function mockDb() {
                 }
               ) 
             }
-            else if (hasNextExpectation('TRANSACTION_SUCCESS_AND_NOT_COMMITTED')) {
-              //
+            else if (hasNextExpectation('TRANSACTION_FAILURE')) {
+              handlePromiseCallbacks(resolve, reject, ['', 'TRANSACTION_FAILURE']) 
             }
           })
         }
@@ -174,4 +218,9 @@ export function mockDb() {
     }
     return obj
   }
+}
+
+export { 
+  mockAuth,
+  mockDb
 }

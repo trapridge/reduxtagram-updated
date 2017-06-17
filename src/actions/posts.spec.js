@@ -4,7 +4,9 @@ import {
   useMockDb,
   loadPosts,
   loadPost,
-  incrementLikes
+  incrementLikes,
+  incrementComments,
+  decrementComments
 } from './posts'
 
 const db = useMockDb(mockDb())
@@ -124,81 +126,151 @@ describe('posts action creators', () => {
 
       expect(dispatch.mock.calls).toEqual(expectedActions)
     })
+
+    it(`should dispatch expected actions if op fails`, async () => {
+      const expectedActions = [
+        [{ type: types.INCREMENT_LIKES_STARTED }], 
+        [{ 
+          type: types.INCREMENT_LIKES_FAILURE,
+          payload: 'problem',
+          error: true
+        }], 
+      ]
+
+      const dispatch = jest.fn()
+
+      db().expectTransactionFailure({
+        payload: 'problem',
+        error: true
+      })
+
+      await incrementLikes('id')(dispatch)
+
+      expect(dispatch.mock.calls).toEqual(expectedActions)
+    })
   })
 
-  // describe('addComment() action creator', () => {
-  //   it('should dispatch expected actions when it succeeds', () => {
-  //     const expectedActions = [
-  //       [{ type: types.ADD_COMMENT_STARTED }], 
-  //       [{ type: types.ADD_COMMENT_SUCCESS }], 
-  //     ]
-  //     const dispatch = jest.fn()
+  describe('incrementComments() action creator', () => {
+    it('should dispatch expected actions if op succeeds', async () => {
+      const expectedActions = [
+        [{ type: types.INCREMENT_COMMENTS_STARTED }], 
+        [{ 
+          type: types.INCREMENT_COMMENTS_SUCCESS, 
+          payload: 'data', 
+          meta: { postId: 'id'} 
+        }], 
+      ]
 
-  //     db().expectPushResolved()
-  //     db().expectSetResolved()
+      const dispatch = jest.fn()
 
-  //     await addComment('a', 'b', 'c')(dispatch)
+      db().expectTransactionSuccessAndCommitted({ 
+        payload: 'data', 
+        meta: { postId: 'id'}
+      })
 
-  //     expect(dispatch.mock.calls).toEqual(expectedActions)
-  //   })
+      await incrementComments('id')(dispatch)
 
-  //   it('should dispatch expected actions when set() fails', () => {
-  //     const expectedActions = [
-  //       [{ type: types.ADD_COMMENT_STARTED }], 
-  //       [{ type: types.ADD_COMMENT_FAILURE, error: 'problem' }], 
-  //     ]
-  //     const dispatch = jest.fn()
+      expect(dispatch.mock.calls).toEqual(expectedActions)
+    })
 
-  //     db().expectPushResolved()
-  //     db().expectSetRejected({ error: 'problem' })
+    it(`should dispatch expected actions if op succeeds but fails 
+        to commit`, async () => {
+      const expectedActions = [
+        [{ type: types.INCREMENT_COMMENTS_STARTED }], 
+        [{ type: types.INCREMENT_COMMENTS_NOT_COMMITTED }], 
+      ]
 
-  //     await addComment('a', 'b', 'c')(dispatch)
+      const dispatch = jest.fn()
 
-  //     expect(dispatch.mock.calls).toEqual(expectedActions)
-  //   })
+      db().expectTransactionSuccessAndNotCommitted()
 
-  //   it('should dispatch expected actions when push() fails', () => {
-  //     const expectedActions = [
-  //       [{ type: types.ADD_COMMENT_STARTED }], 
-  //       [{ type: types.ADD_COMMENT_FAILURE, error: 'problem' }], 
-  //     ]
-  //     const dispatch = jest.fn()
+      await incrementComments('id')(dispatch)
 
-  //     db().expectPushRejected({ error: 'problem' })
+      expect(dispatch.mock.calls).toEqual(expectedActions)
+    })
 
-  //     await addComment('a', 'b', 'c')(dispatch)
+    it(`should dispatch expected actions if op fails`, async () => {
+      const expectedActions = [
+        [{ type: types.INCREMENT_COMMENTS_STARTED }], 
+        [{ 
+          type: types.INCREMENT_COMMENTS_FAILURE,
+          payload: 'problem',
+          error: true
+        }], 
+      ]
 
-  //     expect(dispatch.mock.calls).toEqual(expectedActions)
-  //   })
-  // })
+      const dispatch = jest.fn()
 
-  // describe('removeComment() action creator', () => {
-  //   it('should dispatch expected actions when it succeeds', () => {
-  //     const expectedActions = [
-  //       [{ type: types.REMOVE_COMMENT_STARTED }], 
-  //       [{ type: types.REMOVE_COMMENT_SUCCESS }], 
-  //     ]
-  //     const dispatch = jest.fn()
+      db().expectTransactionFailure({
+        payload: 'problem',
+        error: true
+      })
 
-  //     db().expectRemoveResolved()
+      await incrementComments('id')(dispatch)
 
-  //     await removeComment('a', 'b')(dispatch)
+      expect(dispatch.mock.calls).toEqual(expectedActions)
+    })
+  })  
 
-  //     expect(dispatch.mock.calls).toEqual(expectedActions)
-  //   })
+  describe('decrementComments() action creator', () => {
+    it('should dispatch expected actions if op succeeds', async () => {
+      const expectedActions = [
+        [{ type: types.DECREMENT_COMMENTS_STARTED }], 
+        [{ 
+          type: types.DECREMENT_COMMENTS_SUCCESS, 
+          payload: 'data', 
+          meta: { postId: 'id'} 
+        }], 
+      ]
 
-  //   it('should dispatch expected actions when remove() fails', () => {
-  //     const expectedActions = [
-  //       [{ type: types.REMOVE_COMMENT_STARTED }], 
-  //       [{ type: types.REMOVE_COMMENT_FAILURE, error: 'problem' }], 
-  //     ]
-  //     const dispatch = jest.fn()
+      const dispatch = jest.fn()
 
-  //     db().expectRemoveRejected({ error: 'problem' })
+      db().expectTransactionSuccessAndCommitted({ 
+        payload: 'data', 
+        meta: { postId: 'id'}
+      })
 
-  //     await removeComment('a', 'b')(dispatch)
+      await decrementComments('id')(dispatch)
 
-  //     expect(dispatch.mock.calls).toEqual(expectedActions)
-  //   })
-  // })
+      expect(dispatch.mock.calls).toEqual(expectedActions)
+    })
+
+    it(`should dispatch expected actions if op succeeds but fails 
+        to commit`, async () => {
+      const expectedActions = [
+        [{ type: types.DECREMENT_COMMENTS_STARTED }], 
+        [{ type: types.DECREMENT_COMMENTS_NOT_COMMITTED }], 
+      ]
+
+      const dispatch = jest.fn()
+
+      db().expectTransactionSuccessAndNotCommitted()
+
+      await decrementComments('id')(dispatch)
+
+      expect(dispatch.mock.calls).toEqual(expectedActions)
+    })
+
+    it(`should dispatch expected actions if op fails`, async () => {
+      const expectedActions = [
+        [{ type: types.DECREMENT_COMMENTS_STARTED }], 
+        [{ 
+          type: types.DECREMENT_COMMENTS_FAILURE,
+          payload: 'problem',
+          error: true
+        }], 
+      ]
+
+      const dispatch = jest.fn()
+
+      db().expectTransactionFailure({
+        payload: 'problem',
+        error: true
+      })
+
+      await decrementComments('id')(dispatch)
+
+      expect(dispatch.mock.calls).toEqual(expectedActions)
+    })
+  })
 })
