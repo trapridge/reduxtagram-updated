@@ -210,7 +210,10 @@ const mockDb = () => {
               ) 
             }
             else if (hasNextExpectation('TRANSACTION_FAILURE')) {
-              handlePromiseCallbacks(resolve, reject, ['', 'TRANSACTION_FAILURE']) 
+              handlePromiseCallbacks(resolve, reject, [
+                '', 
+                'TRANSACTION_FAILURE'
+                ]) 
             }
           })
         }

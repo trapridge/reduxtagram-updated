@@ -37,7 +37,7 @@ describe('userData action creators', () => {
         [{ type: types.AUTHENTICATE_USER_STARTED }], 
         [{ 
           type: types.AUTHENTICATE_USER_FAILURE, 
-          payload: new Error('Provider with name "unsupported" not available'), 
+          payload: new Error('Provider with name "unsupported" incorrect'), 
           error: true
         }], 
       ]

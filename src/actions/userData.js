@@ -1,4 +1,4 @@
-import { getAuth } from '../base'
+import { getAuth } from '../backend'
 import * as types from './actionTypes'
 
 let auth = getAuth()
@@ -25,7 +25,7 @@ export function login(providerName) {
       default:
         dispatch({ 
           type: types.AUTHENTICATE_USER_FAILURE,
-          payload: new Error(`Provider with name "${providerName}" not available`),
+          payload: new Error(`Provider with name "${providerName}" incorrect`),
           error: true
         })
         return

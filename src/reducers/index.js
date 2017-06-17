@@ -1,10 +1,13 @@
 import { combineReducers } from 'redux'
 import { routerReducer } from 'react-router-redux'
 
-import { posts } from './posts'
-import { comments } from './comments'
-import { userData } from './userData'
+import { postsReducer } from './postsReducer'
+import { commentsReducer } from './commentsReducer'
+import { userDataReducer } from './userDataReducer'
 
 export const rootReducer = combineReducers({
-  routing: routerReducer, posts, comments, userData
+  routing: routerReducer, 
+  posts: postsReducer, 
+  comments: commentsReducer, 
+  userData: userDataReducer
 })

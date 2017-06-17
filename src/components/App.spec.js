@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow, mount } from 'enzyme'
 
-import Main from './Main'
+import App from './App'
 
 const ChildElement = () => <div>{'I\'m a child'}</div>
 const minProps = { 
@@ -13,14 +13,14 @@ const minProps = {
 describe('Comments', () => {
   describe('RENDERING', () => {
     it('renders without crashing', () => {
-      shallow(<Main {...minProps} />)
+      shallow(<App {...minProps} />)
     })
 
     it('renders a child with cloned props', () => {
       const wrapper = mount(
-        <Main {...minProps}>
+        <App {...minProps}>
           <ChildElement test={1} />
-        </Main>
+        </App>
       )
 
       expect(wrapper.children().last().getNode().props.login)
@@ -32,7 +32,7 @@ describe('Comments', () => {
 
   describe('INTERACTION', () => {
     describe('clicking login buttons', () => {
-      const wrapper = shallow(<Main {...minProps} />)
+      const wrapper = shallow(<App {...minProps} />)
       
       beforeEach(() => {
         wrapper.find('button').forEach(button => {
@@ -51,7 +51,7 @@ describe('Comments', () => {
     })
 
     describe('clicking logout button', () => {
-      const wrapper = shallow(<Main {...minProps} />)
+      const wrapper = shallow(<App {...minProps} />)
       
       beforeEach(() => {
         wrapper.find('.logout-button').prop('onClick')()    

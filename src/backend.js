@@ -13,4 +13,3 @@ firebase.initializeApp(firebaseConfig)
 
 export function getDb() { return firebase.database }
 export function getAuth() { return firebase.auth }
-// export const auth = firebase.auth

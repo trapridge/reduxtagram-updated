@@ -1,21 +1,21 @@
 import * as types from '../actions/actionTypes'
 
-export function posts(state = {}, action) {
+export function postsReducer(posts = {}, action) {
   switch (action.type) {
     case types.INCREMENT_LIKES_SUCCESS: {
-      const updatedPost = state[action.postId]
+      const updatedPost = posts[action.postId]
       updatedPost.likes = action.newValue
       return {
-        ...state, [action.postId]: updatedPost 
+        ...posts, [action.postId]: updatedPost 
       }
     }
 
     case types.INCREMENT_COMMENTS_SUCCESS:
     case types.DECREMENT_COMMENTS_SUCCESS: {
-      const updatedPost = state[action.postId]
+      const updatedPost = posts[action.postId]
       updatedPost.comments = action.newValue
       return {
-        ...state, [action.postId]: updatedPost 
+        ...posts, [action.postId]: updatedPost 
       }
     }
 
@@ -24,11 +24,11 @@ export function posts(state = {}, action) {
     }
 
     case types.LOAD_POST_SUCCESS: {
-      return { ...state, [action.postId]: action.payload }
+      return { ...posts, [action.postId]: action.payload }
     }
 
     default: {
-      return state  
+      return posts  
     }
   }
 }

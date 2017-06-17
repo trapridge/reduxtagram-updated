@@ -1,4 +1,4 @@
-import { getDb } from '../base'
+import { getDb } from '../backend'
 import * as types from './actionTypes'
 
 let db = getDb()

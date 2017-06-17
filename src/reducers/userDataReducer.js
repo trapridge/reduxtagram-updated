@@ -1,6 +1,6 @@
 import * as types from '../actions/actionTypes'
 
-export function userData(state = {}, action) {
+export function userDataReducer(userData = {}, action) {
   switch (action.type) {
     case types.AUTHENTICATE_USER_SUCCESS: {
       return { ...action.payload }  
@@ -12,7 +12,7 @@ export function userData(state = {}, action) {
     }
 
     default: {
-      return state      
+      return userData      
     }
   }
 }
