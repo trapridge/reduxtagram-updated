@@ -12,7 +12,7 @@ React app mimicking Instagram. Built by extending and modifying the app created 
 
 # Run unit tests
 
-TODO
+`npm test`
 
 # Run e2e tests
 

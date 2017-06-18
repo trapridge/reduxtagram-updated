@@ -1,23 +1,33 @@
-import { applyMiddleware, createStore, compose } from 'redux'
-import { syncHistoryWithStore } from 'react-router-redux'
-import { browserHistory } from 'react-router'
+import { applyMiddleware, createStore, compose, combineReducers } from 'redux'
 import thunk from 'redux-thunk'
-import logger from 'redux-logger'
+import { browserHistory } from 'react-router'
+import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
 
-import { rootReducer } from './reducers/index'
+import postsReducer from './ducks/posts'
+import commentsReducer from './ducks/comments'
+import userDataReducer from './ducks/userData'
+
+const getRootReducer = (newReducer = {}) => {
+  return combineReducers({
+    routing: routerReducer,
+    posts: postsReducer,
+    comments: commentsReducer,
+    userData: userDataReducer,
+    ...newReducer
+  })
+} 
 
 const persistedState = localStorage.getItem('state')
   ? JSON.parse(localStorage.getItem('state'))
   : {}
 
-let middleware = applyMiddleware(thunk, logger)
-
+let middleware = applyMiddleware(thunk)
 /*eslint no-undef:0*/
 if (process.env.NODE_ENV !== 'production' && window.devToolsExtension) {
   middleware = compose(middleware, window.devToolsExtension())
 }
 
-export const store = createStore(rootReducer, persistedState, middleware)
+export const store = createStore(getRootReducer(), persistedState, middleware)
 export const history = syncHistoryWithStore(browserHistory, store)
 
 store.subscribe(() => {
@@ -25,8 +35,18 @@ store.subscribe(() => {
 })
 
 if (module.hot) {
-  module.hot.accept('./reducers/', () => {
-    const nextRootReducer = require('./reducers/index.js').rootReducer
-    store.replaceReducer(nextRootReducer)
+  module.hot.accept('./ducks/posts.js', () => {
+    const reducer = { posts: require('./ducks/posts.js').default }
+    store.replaceReducer(getRootReducer(reducer))
+  })
+
+  module.hot.accept('./ducks/comments.js', () => {
+    const reducer = { comments: require('./ducks/comments.js').default }
+    store.replaceReducer(getRootReducer(reducer))
+  })
+
+  module.hot.accept('./ducks/userData.js', () => {
+    const reducer = { userData: require('./ducks/userData.js').default }
+    store.replaceReducer(getRootReducer(reducer))
   })
 }

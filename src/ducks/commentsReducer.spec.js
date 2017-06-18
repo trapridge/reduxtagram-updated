@@ -1,5 +1,5 @@
-import * as types from '../actions/actionTypes'
-import { commentsReducer } from './commentsReducer'
+import * as types from './actionTypes'
+import commentsReducer from './comments'
 
 describe('comments reducer', () => {
   it('returns empty object as default state', () => {

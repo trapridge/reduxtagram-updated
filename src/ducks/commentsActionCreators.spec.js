@@ -1,7 +1,7 @@
 import { mockDb } from '../mockFirebase'
 import * as types from './actionTypes'
 import {
-  useMockDb,
+  _useMockDb,
   addComment,
   startCommentsSync,
   stopCommentsSync,
@@ -9,7 +9,7 @@ import {
   removeComment
 } from './comments'
 
-const db = useMockDb(mockDb())
+const db = _useMockDb(mockDb())
 
 describe('comments action creators', () => {
   afterEach(() => {

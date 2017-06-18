@@ -1,7 +1,7 @@
 import { mockDb } from '../mockFirebase'
 import * as types from './actionTypes'
 import {
-  useMockDb,
+  _useMockDb,
   loadPosts,
   loadPost,
   incrementLikes,
@@ -9,7 +9,7 @@ import {
   decrementComments
 } from './posts'
 
-const db = useMockDb(mockDb())
+const db = _useMockDb(mockDb())
 
 describe('posts action creators', () => {
   afterEach(() => {

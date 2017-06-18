@@ -1,5 +1,5 @@
-import * as types from '../actions/actionTypes'
-import { userDataReducer } from './userDataReducer'
+import * as types from './actionTypes'
+import userDataReducer from './userData'
 
 describe('comments reducer', () => {
   it('returns empty object as default state', () => {

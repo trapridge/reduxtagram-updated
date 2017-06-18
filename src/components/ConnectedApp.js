@@ -1,11 +1,19 @@
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import * as postsActionCreators from '../actions/posts'
-import * as commentsActionCreators from '../actions/comments'
-import * as userDataActionCreators from '../actions/userData'
-
 import App from './App'
+import * as postsActionCreators from '../ducks/posts'
+import * as commentsActionCreators from '../ducks/comments'
+import * as userDataActionCreators from '../ducks/userData'
+
+function removeHelperFns(fns) {
+  for (let prop in fns) {
+    if (prop.startsWith('_')) {
+      delete fns[prop]
+    }
+  }
+  return fns
+}
 
 function mapStateToProps(state) {
   return {
@@ -18,9 +26,9 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      ...postsActionCreators,
-      ...commentsActionCreators,
-      ...userDataActionCreators
+      ...removeHelperFns(postsActionCreators),
+      ...removeHelperFns(commentsActionCreators),
+      ...removeHelperFns(userDataActionCreators)
     },
     dispatch
   )

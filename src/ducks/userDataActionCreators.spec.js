@@ -1,8 +1,8 @@
 import { mockAuth } from '../mockFirebase'
 import * as types from './actionTypes'
-import { useMockAuth, login, logout } from './userData'
+import { _useMockAuth, login, logout } from './userData'
 
-const auth = useMockAuth(mockAuth())
+const auth = _useMockAuth(mockAuth())
 
 describe('userData action creators', () => {
   afterEach(() => {

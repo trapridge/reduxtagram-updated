@@ -1,10 +1,44 @@
-import { getDb } from '../backend'
 import * as types from './actionTypes'
+import { getDb } from '../backendConfig'
+
+////////////////////////////////////////////////////////////////////////////////
+//// reducer
+////////////////////////////////////////////////////////////////////////////////
+
+export default function reducer(comments = {}, action) {
+  switch (action.type) {
+    case types.CLEAR_COMMENTS: {
+      return {}
+    }
+
+    case types.START_COMMENTS_SYNC_SUCCESS: {
+      if (action.payload !== null) {
+        return {
+          ...comments,
+          [action.meta.postId]: action.payload
+        }
+      }
+      delete comments[action.meta.postId]
+      return {
+        ...comments
+      }
+    }
+
+    default: {
+      return comments
+    }
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//// action creators
+////////////////////////////////////////////////////////////////////////////////
 
 let commentsSubscription
 let db = getDb()
 
-export function useMockDb(mockDb) {
+// for unit tests
+export function _useMockDb(mockDb) {
   db = mockDb
   return db
 }

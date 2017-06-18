@@ -1,5 +1,5 @@
-import * as types from '../actions/actionTypes'
-import { postsReducer } from './postsReducer'
+import * as types from './actionTypes'
+import postsReducer from './posts'
 
 describe('postsReducer', () => {
   it('returns empty object as default state', () => {

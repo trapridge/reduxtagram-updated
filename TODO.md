@@ -2,8 +2,8 @@
 
 First
 
-- [ ] ducks
 - [ ] e2e tests
+- [x] ducks
 - [x] unit tests
 - [x] persist comments with firebase
 - [x] try to get rid of transform-related deps

@@ -6,12 +6,12 @@ import Raven from 'raven-js'
 
 import './styles/style.css'
 
+import { sentry_url } from './ravenConfig'
+import { store, history } from './store'
+
 import ConnectedApp from './components/ConnectedApp'
 import Single from './components/Single'
 import PhotoGrid from './components/PhotoGrid'
-import { sentry_url } from './data/config'
-
-import { store, history } from './store'
 
 const routes = (
   <Provider store={store}>
