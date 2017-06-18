@@ -2,9 +2,14 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router'
 
-export default class Main extends React.Component {
+export default class App extends React.Component {
   render() {
-    const { login, logout } = this.props
+    const { login, logout, userData } = this.props
+    const logoutButton = Object.keys(userData).length > 0
+      ? <button className="logout-button" onClick={() => logout()}>
+          Log out
+        </button>
+      : ''
     return (
       <div>
         <h1><Link to="/">Reduxtagram</Link></h1>
@@ -20,9 +25,7 @@ export default class Main extends React.Component {
         >
           Log in with Twitter
         </button>
-        <button className="logout-button" onClick={() => logout()}>
-          Log out
-        </button>
+        {logoutButton}
         {React.cloneElement(this.props.children, this.props)}
       </div>
     )

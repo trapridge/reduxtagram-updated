@@ -4,7 +4,7 @@ export function postsReducer(posts = {}, action) {
   switch (action.type) {
     case types.INCREMENT_LIKES_SUCCESS: {
       const updatedPost = posts[action.meta.postId]
-      updatedPost.likes = action.payload.likes
+      updatedPost.likes = action.payload
       return {
         ...posts,
         [action.meta.postId]: updatedPost
@@ -14,7 +14,7 @@ export function postsReducer(posts = {}, action) {
     case types.INCREMENT_COMMENTS_SUCCESS:
     case types.DECREMENT_COMMENTS_SUCCESS: {
       const updatedPost = posts[action.meta.postId]
-      updatedPost.comments = action.payload.comments
+      updatedPost.comments = action.payload
       return {
         ...posts,
         [action.meta.postId]: updatedPost

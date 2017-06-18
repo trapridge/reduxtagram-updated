@@ -30,9 +30,7 @@ describe('postsReducer', () => {
     it('returns state with new number of likes', () => {
       const action = {
         type: types.INCREMENT_LIKES_SUCCESS,
-        payload: {
-          likes: 2
-        },
+        payload: 2,
         meta: {
           postId: 'postId1'
         }
@@ -65,9 +63,7 @@ describe('postsReducer', () => {
     it('returns state with new number of comments', () => {
       const action = {
         type: types.INCREMENT_COMMENTS_SUCCESS,
-        payload: {
-          comments: 2
-        },
+        payload: 2,
         meta: {
           postId: 'postId1'
         }
@@ -100,9 +96,7 @@ describe('postsReducer', () => {
     it('returns state with new number of comments', () => {
       const action = {
         type: types.DECREMENT_COMMENTS_SUCCESS,
-        payload: {
-          comments: 2
-        },
+        payload: 2,
         meta: {
           postId: 'postId1'
         }

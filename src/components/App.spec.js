@@ -7,6 +7,7 @@ const ChildElement = () => <div>{"I'm a child"}</div>
 const minProps = {
   login: jest.fn(),
   logout: jest.fn(),
+  userData: { foo: 'bar' },
   children: []
 }
 
@@ -53,14 +54,22 @@ describe('Comments', () => {
     })
 
     describe('clicking logout button', () => {
-      const wrapper = shallow(<App {...minProps} />)
-
-      beforeEach(() => {
-        wrapper.find('.logout-button').prop('onClick')()
+      afterEach(() => {
+        minProps.logout.mockClear()
       })
 
       it('should call logout', () => {
+        const wrapper = shallow(<App {...minProps} />)
+        const logoutButton = wrapper.find('.logout-button')
+        logoutButton.prop('onClick')()
         expect(minProps.logout).toBeCalled()
+      })
+
+      it('should fail to call logout if button is not there', () => {
+        const wrapper = shallow(<App {...minProps} userData={{}} />)
+        const logoutButton = wrapper.find('.logout-button')
+        expect(logoutButton).not.toBePresent()
+        expect(minProps.logout).not.toBeCalled()
       })
     })
   })

@@ -2,9 +2,9 @@
 
 First
 
-- [ ] authenticate & personalize with firebase
-- [ ] unit tests
+- [ ] ducks
 - [ ] e2e tests
+- [x] unit tests
 - [x] persist comments with firebase
 - [x] try to get rid of transform-related deps
 - [x] fix eslint
@@ -15,8 +15,9 @@ First
 
 Second
 
+ * authenticate & personalize with firebase
  * change and load sample data
  * load images from e.g. flickr
  * upload images?
- * revamp ui
+ * revamp ui with material-ui
  * make responsive

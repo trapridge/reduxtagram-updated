@@ -30,13 +30,12 @@ const Photo = ({ post, id, incrementLikes }) => {
       </figcaption>
 
       <div className="control-buttons">
-        <button className="likes" onClick={() => incrementLikes(id)}>
+        <button className="likes" onClick={incrementLikes.bind(null, id)}>
           &hearts; {post.likes}
         </button>
         <Link className="button" to={`/view/${id}`}>
           <span className="comment-count">
-            <span className="speech-bubble" />
-            {post.comments}
+            <span className="speech-bubble" /> {post.comments}
           </span>
         </Link>
       </div>
