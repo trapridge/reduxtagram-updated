@@ -13,14 +13,14 @@ export default class Comments extends React.Component {
     decrementComments: PropTypes.func
   }
 
-  handleCommentRemove(commentId, postId) {
+  handleCommentRemove = (commentId, postId) => {
     const { removeComment, decrementComments } = this.props
     removeComment(commentId, postId)
     decrementComments(postId)
     // Raven.captureMessage('Comment removed')
   }
 
-  handleSubmit(event, postId) {
+  handleSubmit = (postId, event) => {
     event.preventDefault()
     const { author, comment, commentForm } = this.refs
     const { addComment, incrementComments } = this.props
@@ -29,17 +29,16 @@ export default class Comments extends React.Component {
     commentForm.reset()
   }
 
-  userIsLoggedIn() {
+  userIsLoggedIn = () => {
     return 'user' in this.props.userData
   }
 
   render() {
     let { comments, id } = this.props
     const postComments = comments[id] || {}
-
     const addForm = this.userIsLoggedIn()
       ? <form
-          onSubmit={e => this.handleSubmit(e, id)}
+          onSubmit={this.handleSubmit.bind(null, id)}
           ref="commentForm"
           className="comment-form"
         >
@@ -59,7 +58,7 @@ export default class Comments extends React.Component {
                 <strong>{comment.user}</strong>
                 {comment.text}
                 <button
-                  onClick={() => this.handleCommentRemove(key, id)}
+                  onClick={this.handleCommentRemove.bind(null, key, id)}
                   className="remove-comment"
                 >
                   &times;

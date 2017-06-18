@@ -15,7 +15,9 @@ First
 
 Second
 
- * authenticate & personalize with firebase
+ * personalize with firebase (rules too)
+ * add storybooks (https://storybook.js.org/basics/slow-start-guide/) 
+ * setup vsc chrome debugger
  * change and load sample data
  * load images from e.g. flickr
  * upload images?
