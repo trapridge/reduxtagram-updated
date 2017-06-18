@@ -1,4 +1,3 @@
-
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
@@ -17,13 +16,16 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    ...postsActionCreators, 
-    ...commentsActionCreators,
-    ...userDataActionCreators 
-  }, dispatch)
+  return bindActionCreators(
+    {
+      ...postsActionCreators,
+      ...commentsActionCreators,
+      ...userDataActionCreators
+    },
+    dispatch
+  )
 }
- 
+
 const ConnectedApp = connect(mapStateToProps, mapDispatchToProps)(App)
 
 export default ConnectedApp

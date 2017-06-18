@@ -6,10 +6,14 @@ export const firebaseConfig = {
   databaseURL: 'https://reduxtagram-updated.firebaseio.com',
   projectId: 'reduxtagram-updated',
   storageBucket: 'reduxtagram-updated.appspot.com',
-  messagingSenderId: '605857204949'  
+  messagingSenderId: '605857204949'
 }
 
 firebase.initializeApp(firebaseConfig)
 
-export function getDb() { return firebase.database }
-export function getAuth() { return firebase.auth }
+export function getDb() {
+  return firebase.database
+}
+export function getAuth() {
+  return firebase.auth
+}

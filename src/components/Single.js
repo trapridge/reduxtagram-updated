@@ -11,7 +11,7 @@ export default class Single extends React.Component {
     comments: PropTypes.object,
     loadPost: PropTypes.func,
     startCommentsSync: PropTypes.func,
-    stopCommentsSync: PropTypes.func,
+    stopCommentsSync: PropTypes.func
   }
 
   componentWillMount() {
@@ -32,8 +32,8 @@ export default class Single extends React.Component {
 
   render() {
     const { postId } = this.props.params
-    const { 
-      posts, 
+    const {
+      posts,
       incrementLikes,
       comments,
       userData,
@@ -43,21 +43,19 @@ export default class Single extends React.Component {
       decrementComments
     } = this.props
     const post = posts[postId]
-    
+
     return (
       <div className="single-photo">
-        <Photo 
-          id={postId} 
-          post={post} 
-          incrementLikes={incrementLikes} />
-        <Comments 
+        <Photo id={postId} post={post} incrementLikes={incrementLikes} />
+        <Comments
           id={postId}
           comments={comments}
           userData={userData}
           addComment={addComment}
           removeComment={removeComment}
           incrementComments={incrementComments}
-          decrementComments={decrementComments} />
+          decrementComments={decrementComments}
+        />
       </div>
     )
   }

@@ -8,11 +8,17 @@ const Photo = ({ post, id, incrementLikes }) => {
     <figure className="grid-figure">
       <div className="grid-photo-wrap">
         <Link to={`/view/${id}`} className="image-link">
-          <img className="grid-photo" src={post.display_src} 
-            alt={post.caption}/>
+          <img
+            className="grid-photo"
+            src={post.display_src}
+            alt={post.caption}
+          />
         </Link>
-        <CSSTransitionGroup transitionName="like" 
-          transitionEnterTimeout={500} transitionLeaveTimeout={500}>
+        <CSSTransitionGroup
+          transitionName="like"
+          transitionEnterTimeout={500}
+          transitionLeaveTimeout={500}
+        >
           <span key={post.likes} className="likes-heart">
             {post.likes}
           </span>
@@ -24,13 +30,13 @@ const Photo = ({ post, id, incrementLikes }) => {
       </figcaption>
 
       <div className="control-buttons">
-        <button className="likes" onClick={() => incrementLikes(id)} >
+        <button className="likes" onClick={() => incrementLikes(id)}>
           &hearts; {post.likes}
         </button>
         <Link className="button" to={`/view/${id}`}>
           <span className="comment-count">
-            <span className="speech-bubble">
-            </span> {post.comments}
+            <span className="speech-bubble" />
+            {post.comments}
           </span>
         </Link>
       </div>

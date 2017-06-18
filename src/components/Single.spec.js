@@ -5,10 +5,10 @@ import Single from './Single'
 import Comments from './Comments'
 import Photo from './Photo'
 
-const minProps = { 
-  params: { postId: 'a' }, 
-  posts: { a: { display_src: ''} },
-  comments: { a: { user: 'a', text: 'b'} },
+const minProps = {
+  params: { postId: 'a' },
+  posts: { a: { display_src: '' } },
+  comments: { a: { user: 'a', text: 'b' } },
   loadPost: jest.fn(),
   startCommentsSync: jest.fn(),
   stopCommentsSync: jest.fn(),
@@ -20,8 +20,8 @@ const minProps = {
   incrementLikes: () => {},
 
   // needed by Comments
-  userData: { user: ''},
-  incrementComments: () => {},  
+  userData: { user: '' },
+  incrementComments: () => {},
   decrementComments: () => {},
   addComment: () => {},
   removeComment: () => {}
@@ -35,35 +35,37 @@ describe('Single', () => {
 
     it('renders a Photo', () => {
       const wrapper = shallow(<Single {...minProps} />)
-      
+
       expect(wrapper.find('.single-photo')).toContainReact(
-        <Photo 
-          id={minProps.id} 
-          post={minProps.posts.a} 
-          incrementLikes={minProps.incrementLikes} />
-      ) 
+        <Photo
+          id={minProps.id}
+          post={minProps.posts.a}
+          incrementLikes={minProps.incrementLikes}
+        />
+      )
     })
 
     it('renders a Comments', () => {
       const wrapper = shallow(<Single {...minProps} />)
-       
+
       expect(wrapper.find('.single-photo')).toContainReact(
-        <Comments 
+        <Comments
           id={minProps.id}
           userData={minProps.userData}
           comments={minProps.comments}
           addComment={minProps.addComment}
           removeComment={minProps.removeComment}
-          incrementComments={minProps.incrementComments} 
-          decrementComments={minProps.decrementComments} />
-      ) 
+          incrementComments={minProps.incrementComments}
+          decrementComments={minProps.decrementComments}
+        />
+      )
     })
   })
 
   describe('INTERACTION', () => {
     describe('componentWillMount', () => {
       const wrapper = shallow(<Single {...minProps} />)
-      
+
       beforeEach(() => {
         wrapper.instance().componentWillMount()
       })
@@ -73,11 +75,7 @@ describe('Single', () => {
       })
 
       it('should call loadPost if current post is not available', () => {
-        shallow(
-          <Single 
-            {...minProps}
-            params={{ postId: 'wrong id' }} />
-        )
+        shallow(<Single {...minProps} params={{ postId: 'wrong id' }} />)
         expect(minProps.loadPost).toBeCalled()
       })
 
@@ -90,7 +88,7 @@ describe('Single', () => {
 
   describe('componentWillUnmount', () => {
     const wrapper = shallow(<Single {...minProps} />)
-    
+
     beforeEach(() => {
       wrapper.instance().componentWillUnmount()
     })

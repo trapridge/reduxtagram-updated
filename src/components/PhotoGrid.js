@@ -14,15 +14,16 @@ export default class PhotoGrid extends React.Component {
   }
 
   render() {
-    const { posts, incrementLikes } = this.props 
+    const { posts, incrementLikes } = this.props
     return (
       <div className="photo-grid">
-        {Object.keys(posts).map(key => 
-          <Photo 
-            key={key} 
+        {Object.keys(posts).map(key =>
+          <Photo
+            key={key}
             id={key}
             post={posts[key]}
-            incrementLikes={incrementLikes} />
+            incrementLikes={incrementLikes}
+          />
         )}
       </div>
     )

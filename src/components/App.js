@@ -8,16 +8,16 @@ export default class Main extends React.Component {
     return (
       <div>
         <h1><Link to="/">Reduxtagram</Link></h1>
-        <button className="github-login-button" 
-            onClick={() => login('github')}>
+        <button className="github-login-button" onClick={() => login('github')}>
           Log in with Github
         </button>
-        <button className="google-login-button" 
-            onClick={() => login('google')}>
+        <button className="google-login-button" onClick={() => login('google')}>
           Log in with Google
         </button>
-        <button className="twitter-login-button" 
-            onClick={() => login('twitter')}>
+        <button
+          className="twitter-login-button"
+          onClick={() => login('twitter')}
+        >
           Log in with Twitter
         </button>
         <button className="logout-button" onClick={() => logout()}>

@@ -1,17 +1,15 @@
 import * as types from '../actions/actionTypes'
-import {
-  userDataReducer
-} from './userDataReducer'
+import { userDataReducer } from './userDataReducer'
 
 describe('comments reducer', () => {
   it('returns empty object as default state', () => {
-    const action = { type: '?'}
+    const action = { type: '?' }
 
     const state = userDataReducer(undefined, action)
 
     expect(state).toEqual({})
   })
-  
+
   it('returns current state if no action matches', () => {
     const currentState = {
       this: 'is',
@@ -30,7 +28,7 @@ describe('comments reducer', () => {
         type: types.LOGOUT_USER_SUCCESS
       }
 
-      const state = userDataReducer({ what: 'ever'}, action)
+      const state = userDataReducer({ what: 'ever' }, action)
 
       expect(state).toEqual({})
     })
@@ -42,7 +40,7 @@ describe('comments reducer', () => {
         type: types.LOGOUT_USER_FAILURE
       }
 
-      const state = userDataReducer({ what: 'ever'}, action)
+      const state = userDataReducer({ what: 'ever' }, action)
 
       expect(state).toEqual({})
     })
@@ -55,7 +53,7 @@ describe('comments reducer', () => {
         payload: { payload: 'user data payload' }
       }
 
-      const state = userDataReducer({ what: 'ever'}, action)
+      const state = userDataReducer({ what: 'ever' }, action)
 
       expect(state).toEqual({
         payload: 'user data payload'

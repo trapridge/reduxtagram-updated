@@ -19,19 +19,21 @@ describe('comments action creators', () => {
   describe('startCommentsSync() action creator', () => {
     it('should dispatch expected actions if sync succeeds', () => {
       const expectedActions = [
-        [{ type: types.START_COMMENTS_SYNC_STARTED }], 
-        [{ 
-          type: types.START_COMMENTS_SYNC_SUCCESS, 
-          payload: 'data',
-          meta: { postId: 'a' },
-        }], 
+        [{ type: types.START_COMMENTS_SYNC_STARTED }],
+        [
+          {
+            type: types.START_COMMENTS_SYNC_SUCCESS,
+            payload: 'data',
+            meta: { postId: 'a' }
+          }
+        ]
       ]
 
       const dispatch = jest.fn()
 
-      db().expectOnSuccess({ 
+      db().expectOnSuccess({
         payload: 'data',
-        meta: { postId: 'a' }, 
+        meta: { postId: 'a' }
       })
 
       startCommentsSync('a')(dispatch)
@@ -41,19 +43,21 @@ describe('comments action creators', () => {
 
     it('should dispatch expected actions if sync fails', () => {
       const expectedActions = [
-        [{ type: types.START_COMMENTS_SYNC_STARTED }], 
-        [{ 
-          type: types.START_COMMENTS_SYNC_FAILURE, 
-          payload: 'problem',
-          error: true
-        }], 
+        [{ type: types.START_COMMENTS_SYNC_STARTED }],
+        [
+          {
+            type: types.START_COMMENTS_SYNC_FAILURE,
+            payload: 'problem',
+            error: true
+          }
+        ]
       ]
 
       const dispatch = jest.fn()
 
-      db().expectOnFailure({ 
+      db().expectOnFailure({
         payload: 'problem',
-        error: true 
+        error: true
       })
 
       startCommentsSync('a')(dispatch)
@@ -64,9 +68,7 @@ describe('comments action creators', () => {
 
   describe('stopCommentsSync() action creator', () => {
     it('should dispatch expected action', () => {
-      const expectedActions = [
-        { type: types.STOP_COMMENTS_SYNC }
-      ]
+      const expectedActions = [{ type: types.STOP_COMMENTS_SYNC }]
 
       db().expectOff()
       const action = stopCommentsSync()
@@ -77,9 +79,7 @@ describe('comments action creators', () => {
 
   describe('clearComments() action creator', () => {
     it('should dispatch expected action', () => {
-      const expectedActions = [
-        { type: types.CLEAR_COMMENTS }
-      ]
+      const expectedActions = [{ type: types.CLEAR_COMMENTS }]
 
       const action = clearComments()
 
@@ -90,8 +90,8 @@ describe('comments action creators', () => {
   describe('addComment() action creator', () => {
     it('should dispatch expected actions when it succeeds', async () => {
       const expectedActions = [
-        [{ type: types.ADD_COMMENT_STARTED }], 
-        [{ type: types.ADD_COMMENT_SUCCESS }], 
+        [{ type: types.ADD_COMMENT_STARTED }],
+        [{ type: types.ADD_COMMENT_SUCCESS }]
       ]
       const dispatch = jest.fn()
 
@@ -105,8 +105,8 @@ describe('comments action creators', () => {
 
     it('should dispatch expected actions when set() fails', async () => {
       const expectedActions = [
-        [{ type: types.ADD_COMMENT_STARTED }], 
-        [{ type: types.ADD_COMMENT_FAILURE, payload: 'problem', error: true }], 
+        [{ type: types.ADD_COMMENT_STARTED }],
+        [{ type: types.ADD_COMMENT_FAILURE, payload: 'problem', error: true }]
       ]
       const dispatch = jest.fn()
 
@@ -120,8 +120,8 @@ describe('comments action creators', () => {
 
     it('should dispatch expected actions when push() fails', async () => {
       const expectedActions = [
-        [{ type: types.ADD_COMMENT_STARTED }], 
-        [{ type: types.ADD_COMMENT_FAILURE, payload: 'problem', error: true }], 
+        [{ type: types.ADD_COMMENT_STARTED }],
+        [{ type: types.ADD_COMMENT_FAILURE, payload: 'problem', error: true }]
       ]
       const dispatch = jest.fn()
 
@@ -136,8 +136,8 @@ describe('comments action creators', () => {
   describe('removeComment() action creator', () => {
     it('should dispatch expected actions when it succeeds', async () => {
       const expectedActions = [
-        [{ type: types.REMOVE_COMMENT_STARTED }], 
-        [{ type: types.REMOVE_COMMENT_SUCCESS }], 
+        [{ type: types.REMOVE_COMMENT_STARTED }],
+        [{ type: types.REMOVE_COMMENT_SUCCESS }]
       ]
       const dispatch = jest.fn()
 
@@ -150,12 +150,14 @@ describe('comments action creators', () => {
 
     it('should dispatch expected actions when remove() fails', async () => {
       const expectedActions = [
-        [{ type: types.REMOVE_COMMENT_STARTED }], 
-        [{ 
-          type: types.REMOVE_COMMENT_FAILURE, 
-          payload: 'problem', 
-          error: true 
-        }], 
+        [{ type: types.REMOVE_COMMENT_STARTED }],
+        [
+          {
+            type: types.REMOVE_COMMENT_FAILURE,
+            payload: 'problem',
+            error: true
+          }
+        ]
       ]
       const dispatch = jest.fn()
 

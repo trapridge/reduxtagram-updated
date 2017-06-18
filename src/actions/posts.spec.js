@@ -19,8 +19,8 @@ describe('posts action creators', () => {
   describe('loadPosts() action creator', () => {
     it('should dispatch expected actions if loading succeeds', () => {
       const expectedActions = [
-        [{ type: types.LOAD_POSTS_STARTED }], 
-        [{ type: types.LOAD_POSTS_SUCCESS, payload: 'data' }], 
+        [{ type: types.LOAD_POSTS_STARTED }],
+        [{ type: types.LOAD_POSTS_SUCCESS, payload: 'data' }]
       ]
 
       const dispatch = jest.fn()
@@ -34,8 +34,8 @@ describe('posts action creators', () => {
 
     it('should dispatch expected actions if loading fails', () => {
       const expectedActions = [
-        [{ type: types.LOAD_POSTS_STARTED }], 
-        [{ type: types.LOAD_POSTS_FAILURE, payload: 'problem', error: true }], 
+        [{ type: types.LOAD_POSTS_STARTED }],
+        [{ type: types.LOAD_POSTS_FAILURE, payload: 'problem', error: true }]
       ]
 
       const dispatch = jest.fn()
@@ -51,17 +51,19 @@ describe('posts action creators', () => {
   describe('loadPost() action creator', () => {
     it('should dispatch expected actions if loading succeeds', () => {
       const expectedActions = [
-        [{ type: types.LOAD_POST_STARTED }], 
-        [{ 
-          type: types.LOAD_POST_SUCCESS, 
-          payload: 'data', 
-          meta: { postId: 'id'} 
-        }], 
+        [{ type: types.LOAD_POST_STARTED }],
+        [
+          {
+            type: types.LOAD_POST_SUCCESS,
+            payload: 'data',
+            meta: { postId: 'id' }
+          }
+        ]
       ]
 
       const dispatch = jest.fn()
 
-      db().expectOnceSuccess({ payload: 'data', meta: { postId: 'id'} })
+      db().expectOnceSuccess({ payload: 'data', meta: { postId: 'id' } })
 
       loadPost('id')(dispatch)
 
@@ -70,12 +72,14 @@ describe('posts action creators', () => {
 
     it('should dispatch expected actions if loading fails', () => {
       const expectedActions = [
-        [{ type: types.LOAD_POST_STARTED }], 
-        [{ 
-          type: types.LOAD_POST_FAILURE, 
-          payload: 'data', 
-          error: true
-        }], 
+        [{ type: types.LOAD_POST_STARTED }],
+        [
+          {
+            type: types.LOAD_POST_FAILURE,
+            payload: 'data',
+            error: true
+          }
+        ]
       ]
 
       const dispatch = jest.fn()
@@ -91,19 +95,21 @@ describe('posts action creators', () => {
   describe('incrementLikes() action creator', () => {
     it('should dispatch expected actions if op succeeds', async () => {
       const expectedActions = [
-        [{ type: types.INCREMENT_LIKES_STARTED }], 
-        [{ 
-          type: types.INCREMENT_LIKES_SUCCESS, 
-          payload: 'data', 
-          meta: { postId: 'id'} 
-        }], 
+        [{ type: types.INCREMENT_LIKES_STARTED }],
+        [
+          {
+            type: types.INCREMENT_LIKES_SUCCESS,
+            payload: 'data',
+            meta: { postId: 'id' }
+          }
+        ]
       ]
 
       const dispatch = jest.fn()
 
-      db().expectTransactionSuccessAndCommitted({ 
-        payload: 'data', 
-        meta: { postId: 'id'}
+      db().expectTransactionSuccessAndCommitted({
+        payload: 'data',
+        meta: { postId: 'id' }
       })
 
       await incrementLikes('id')(dispatch)
@@ -114,8 +120,8 @@ describe('posts action creators', () => {
     it(`should dispatch expected actions if op succeeds but fails 
         to commit`, async () => {
       const expectedActions = [
-        [{ type: types.INCREMENT_LIKES_STARTED }], 
-        [{ type: types.INCREMENT_LIKES_NOT_COMMITTED }], 
+        [{ type: types.INCREMENT_LIKES_STARTED }],
+        [{ type: types.INCREMENT_LIKES_NOT_COMMITTED }]
       ]
 
       const dispatch = jest.fn()
@@ -127,14 +133,16 @@ describe('posts action creators', () => {
       expect(dispatch.mock.calls).toEqual(expectedActions)
     })
 
-    it(`should dispatch expected actions if op fails`, async () => {
+    it('should dispatch expected actions if op fails', async () => {
       const expectedActions = [
-        [{ type: types.INCREMENT_LIKES_STARTED }], 
-        [{ 
-          type: types.INCREMENT_LIKES_FAILURE,
-          payload: 'problem',
-          error: true
-        }], 
+        [{ type: types.INCREMENT_LIKES_STARTED }],
+        [
+          {
+            type: types.INCREMENT_LIKES_FAILURE,
+            payload: 'problem',
+            error: true
+          }
+        ]
       ]
 
       const dispatch = jest.fn()
@@ -153,19 +161,21 @@ describe('posts action creators', () => {
   describe('incrementComments() action creator', () => {
     it('should dispatch expected actions if op succeeds', async () => {
       const expectedActions = [
-        [{ type: types.INCREMENT_COMMENTS_STARTED }], 
-        [{ 
-          type: types.INCREMENT_COMMENTS_SUCCESS, 
-          payload: 'data', 
-          meta: { postId: 'id'} 
-        }], 
+        [{ type: types.INCREMENT_COMMENTS_STARTED }],
+        [
+          {
+            type: types.INCREMENT_COMMENTS_SUCCESS,
+            payload: 'data',
+            meta: { postId: 'id' }
+          }
+        ]
       ]
 
       const dispatch = jest.fn()
 
-      db().expectTransactionSuccessAndCommitted({ 
-        payload: 'data', 
-        meta: { postId: 'id'}
+      db().expectTransactionSuccessAndCommitted({
+        payload: 'data',
+        meta: { postId: 'id' }
       })
 
       await incrementComments('id')(dispatch)
@@ -176,8 +186,8 @@ describe('posts action creators', () => {
     it(`should dispatch expected actions if op succeeds but fails 
         to commit`, async () => {
       const expectedActions = [
-        [{ type: types.INCREMENT_COMMENTS_STARTED }], 
-        [{ type: types.INCREMENT_COMMENTS_NOT_COMMITTED }], 
+        [{ type: types.INCREMENT_COMMENTS_STARTED }],
+        [{ type: types.INCREMENT_COMMENTS_NOT_COMMITTED }]
       ]
 
       const dispatch = jest.fn()
@@ -189,14 +199,16 @@ describe('posts action creators', () => {
       expect(dispatch.mock.calls).toEqual(expectedActions)
     })
 
-    it(`should dispatch expected actions if op fails`, async () => {
+    it('should dispatch expected actions if op fails', async () => {
       const expectedActions = [
-        [{ type: types.INCREMENT_COMMENTS_STARTED }], 
-        [{ 
-          type: types.INCREMENT_COMMENTS_FAILURE,
-          payload: 'problem',
-          error: true
-        }], 
+        [{ type: types.INCREMENT_COMMENTS_STARTED }],
+        [
+          {
+            type: types.INCREMENT_COMMENTS_FAILURE,
+            payload: 'problem',
+            error: true
+          }
+        ]
       ]
 
       const dispatch = jest.fn()
@@ -210,24 +222,26 @@ describe('posts action creators', () => {
 
       expect(dispatch.mock.calls).toEqual(expectedActions)
     })
-  })  
+  })
 
   describe('decrementComments() action creator', () => {
     it('should dispatch expected actions if op succeeds', async () => {
       const expectedActions = [
-        [{ type: types.DECREMENT_COMMENTS_STARTED }], 
-        [{ 
-          type: types.DECREMENT_COMMENTS_SUCCESS, 
-          payload: 'data', 
-          meta: { postId: 'id'} 
-        }], 
+        [{ type: types.DECREMENT_COMMENTS_STARTED }],
+        [
+          {
+            type: types.DECREMENT_COMMENTS_SUCCESS,
+            payload: 'data',
+            meta: { postId: 'id' }
+          }
+        ]
       ]
 
       const dispatch = jest.fn()
 
-      db().expectTransactionSuccessAndCommitted({ 
-        payload: 'data', 
-        meta: { postId: 'id'}
+      db().expectTransactionSuccessAndCommitted({
+        payload: 'data',
+        meta: { postId: 'id' }
       })
 
       await decrementComments('id')(dispatch)
@@ -238,8 +252,8 @@ describe('posts action creators', () => {
     it(`should dispatch expected actions if op succeeds but fails 
         to commit`, async () => {
       const expectedActions = [
-        [{ type: types.DECREMENT_COMMENTS_STARTED }], 
-        [{ type: types.DECREMENT_COMMENTS_NOT_COMMITTED }], 
+        [{ type: types.DECREMENT_COMMENTS_STARTED }],
+        [{ type: types.DECREMENT_COMMENTS_NOT_COMMITTED }]
       ]
 
       const dispatch = jest.fn()
@@ -251,14 +265,16 @@ describe('posts action creators', () => {
       expect(dispatch.mock.calls).toEqual(expectedActions)
     })
 
-    it(`should dispatch expected actions if op fails`, async () => {
+    it('should dispatch expected actions if op fails', async () => {
       const expectedActions = [
-        [{ type: types.DECREMENT_COMMENTS_STARTED }], 
-        [{ 
-          type: types.DECREMENT_COMMENTS_FAILURE,
-          payload: 'problem',
-          error: true
-        }], 
+        [{ type: types.DECREMENT_COMMENTS_STARTED }],
+        [
+          {
+            type: types.DECREMENT_COMMENTS_FAILURE,
+            payload: 'problem',
+            error: true
+          }
+        ]
       ]
 
       const dispatch = jest.fn()

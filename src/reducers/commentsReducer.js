@@ -8,19 +8,19 @@ export function commentsReducer(comments = {}, action) {
 
     case types.START_COMMENTS_SYNC_SUCCESS: {
       if (action.payload !== null) {
-        return { 
-          ...comments, 
-          [action.meta.postId]: action.payload 
-        }  
+        return {
+          ...comments,
+          [action.meta.postId]: action.payload
+        }
       }
       delete comments[action.meta.postId]
       return {
         ...comments
       }
     }
-    
+
     default: {
-      return comments      
+      return comments
     }
   }
 }

@@ -1,10 +1,6 @@
 import { mockAuth } from '../mockFirebase'
 import * as types from './actionTypes'
-import {
-  useMockAuth,
-  login,
-  logout
-} from './userData'
+import { useMockAuth, login, logout } from './userData'
 
 const auth = useMockAuth(mockAuth())
 
@@ -16,11 +12,13 @@ describe('userData action creators', () => {
   describe('login() action creator', () => {
     it('should dispatch expected actions if login succeeds', async () => {
       const expectedActions = [
-        [{ type: types.AUTHENTICATE_USER_STARTED }], 
-        [{ 
-          type: types.AUTHENTICATE_USER_SUCCESS, 
-          payload: 'data', 
-        }], 
+        [{ type: types.AUTHENTICATE_USER_STARTED }],
+        [
+          {
+            type: types.AUTHENTICATE_USER_SUCCESS,
+            payload: 'data'
+          }
+        ]
       ]
 
       const dispatch = jest.fn()
@@ -34,12 +32,14 @@ describe('userData action creators', () => {
 
     it('should dispatch expected actions if provider is unsupported', async () => {
       const expectedActions = [
-        [{ type: types.AUTHENTICATE_USER_STARTED }], 
-        [{ 
-          type: types.AUTHENTICATE_USER_FAILURE, 
-          payload: new Error('Provider with name "unsupported" incorrect'), 
-          error: true
-        }], 
+        [{ type: types.AUTHENTICATE_USER_STARTED }],
+        [
+          {
+            type: types.AUTHENTICATE_USER_FAILURE,
+            payload: new Error('Provider with name "unsupported" incorrect'),
+            error: true
+          }
+        ]
       ]
 
       const dispatch = jest.fn()
@@ -51,18 +51,20 @@ describe('userData action creators', () => {
 
     it('should dispatch expected actions if provider login fails', async () => {
       const expectedActions = [
-        [{ type: types.AUTHENTICATE_USER_STARTED }], 
-        [{ 
-          type: types.AUTHENTICATE_USER_FAILURE, 
-          payload: 'problem', 
-          error: true
-        }], 
+        [{ type: types.AUTHENTICATE_USER_STARTED }],
+        [
+          {
+            type: types.AUTHENTICATE_USER_FAILURE,
+            payload: 'problem',
+            error: true
+          }
+        ]
       ]
 
       const dispatch = jest.fn()
 
       auth().expectSignInWithPopupRejected({
-        payload: 'problem', 
+        payload: 'problem',
         error: true
       })
 
@@ -75,8 +77,8 @@ describe('userData action creators', () => {
   describe('logout() action creator', () => {
     it('should dispatch expected actions if logout succeeds', async () => {
       const expectedActions = [
-        [{ type: types.LOGOUT_USER_STARTED }], 
-        [{ type: types.LOGOUT_USER_SUCCESS }], 
+        [{ type: types.LOGOUT_USER_STARTED }],
+        [{ type: types.LOGOUT_USER_SUCCESS }]
       ]
 
       const dispatch = jest.fn()
@@ -90,18 +92,20 @@ describe('userData action creators', () => {
 
     it('should dispatch expected actions if provider logout fails', async () => {
       const expectedActions = [
-        [{ type: types.LOGOUT_USER_STARTED }], 
-        [{ 
-          type: types.LOGOUT_USER_FAILURE, 
-          payload: 'problem', 
-          error: true
-        }], 
+        [{ type: types.LOGOUT_USER_STARTED }],
+        [
+          {
+            type: types.LOGOUT_USER_FAILURE,
+            payload: 'problem',
+            error: true
+          }
+        ]
       ]
 
       const dispatch = jest.fn()
 
       auth().expectSignOutRejected({
-        payload: 'problem', 
+        payload: 'problem',
         error: true
       })
 
@@ -110,5 +114,4 @@ describe('userData action creators', () => {
       expect(dispatch.mock.calls).toEqual(expectedActions)
     })
   })
-
 })

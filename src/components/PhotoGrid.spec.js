@@ -3,8 +3,8 @@ import { shallow } from 'enzyme'
 
 import PhotoGrid from './PhotoGrid'
 
-const minProps = { 
-  posts: {}, 
+const minProps = {
+  posts: {},
   loadPosts: jest.fn(),
 
   // needed by children
@@ -18,13 +18,13 @@ describe('PhotoGrid', () => {
     })
 
     it('renders a list of Photo tags', () => {
-      const props = { 
-        ...minProps, 
-        posts: {  
-          a: { id: 'a', post: {} }, 
-          b: { id: 'a', post: {} }, 
+      const props = {
+        ...minProps,
+        posts: {
+          a: { id: 'a', post: {} },
+          b: { id: 'a', post: {} },
           c: { id: 'a', post: {} }
-        } 
+        }
       }
       const wrapper = shallow(<PhotoGrid {...props} />)
 
@@ -38,7 +38,7 @@ describe('PhotoGrid', () => {
   describe('INTERACTION', () => {
     describe('componentWillMount', () => {
       const wrapper = shallow(<PhotoGrid {...minProps} />)
-      
+
       beforeEach(() => {
         wrapper.instance().componentWillMount()
       })

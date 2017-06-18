@@ -9,7 +9,7 @@ import './styles/style.css'
 import ConnectedApp from './components/ConnectedApp'
 import Single from './components/Single'
 import PhotoGrid from './components/PhotoGrid'
-import { sentry_url } from './data/config' 
+import { sentry_url } from './data/config'
 
 import { store, history } from './store'
 
@@ -17,8 +17,8 @@ const routes = (
   <Provider store={store}>
     <Router history={history}>
       <Route path="/" component={ConnectedApp}>
-        <IndexRoute component={PhotoGrid}></IndexRoute>
-        <Route path="/view/:postId" component={Single}></Route>
+        <IndexRoute component={PhotoGrid} />
+        <Route path="/view/:postId" component={Single} />
       </Route>
     </Router>
   </Provider>

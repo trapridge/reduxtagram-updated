@@ -6,8 +6,8 @@ import { commentsReducer } from './commentsReducer'
 import { userDataReducer } from './userDataReducer'
 
 export const rootReducer = combineReducers({
-  routing: routerReducer, 
-  posts: postsReducer, 
-  comments: commentsReducer, 
+  routing: routerReducer,
+  posts: postsReducer,
+  comments: commentsReducer,
   userData: userDataReducer
 })

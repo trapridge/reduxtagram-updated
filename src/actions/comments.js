@@ -12,27 +12,29 @@ export function useMockDb(mockDb) {
 export function startCommentsSync(postId) {
   return dispatch => {
     dispatch({ type: types.START_COMMENTS_SYNC_STARTED })
-    commentsSubscription = db().ref(`comments/${postId}`).on('value', 
+    commentsSubscription = db().ref(`comments/${postId}`).on(
+      'value',
       snapshot => {
-        dispatch({ 
-          type: types.START_COMMENTS_SYNC_SUCCESS, 
+        dispatch({
+          type: types.START_COMMENTS_SYNC_SUCCESS,
           payload: snapshot.val(),
           meta: { postId }
         })
-      }, 
+      },
       error => {
-        dispatch({ 
-          type: types.START_COMMENTS_SYNC_FAILURE, 
-          payload: error, 
-          error: true 
-        })   
-      })
+        dispatch({
+          type: types.START_COMMENTS_SYNC_FAILURE,
+          payload: error,
+          error: true
+        })
+      }
+    )
   }
 }
 
 export function stopCommentsSync(postId) {
   db().ref(`comments/${postId}`).off('value', commentsSubscription)
-  return ({ type: types.STOP_COMMENTS_SYNC })   
+  return { type: types.STOP_COMMENTS_SYNC }
 }
 
 export function clearComments() {
@@ -47,10 +49,10 @@ export function addComment(postId, user, text) {
       await newComment.set({ user, text })
       dispatch({ type: types.ADD_COMMENT_SUCCESS })
     } catch (error) {
-      dispatch({ 
-        type: types.ADD_COMMENT_FAILURE, 
-        payload: error, 
-        error: true 
+      dispatch({
+        type: types.ADD_COMMENT_FAILURE,
+        payload: error,
+        error: true
       })
     }
   }
@@ -62,11 +64,11 @@ export function removeComment(commentId, postId) {
       dispatch({ type: types.REMOVE_COMMENT_STARTED })
       await db().ref(`comments/${postId}/${commentId}`).remove()
       dispatch({ type: types.REMOVE_COMMENT_SUCCESS })
-    } catch (error) { 
-      dispatch({ 
-        type: types.REMOVE_COMMENT_FAILURE, 
-        payload: error, 
-        error: true 
+    } catch (error) {
+      dispatch({
+        type: types.REMOVE_COMMENT_FAILURE,
+        payload: error,
+        error: true
       })
     }
   }

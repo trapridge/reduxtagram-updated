@@ -3,8 +3,8 @@ import { shallow, mount } from 'enzyme'
 
 import App from './App'
 
-const ChildElement = () => <div>{'I\'m a child'}</div>
-const minProps = { 
+const ChildElement = () => <div>{"I'm a child"}</div>
+const minProps = {
   login: jest.fn(),
   logout: jest.fn(),
   children: []
@@ -23,22 +23,24 @@ describe('Comments', () => {
         </App>
       )
 
-      expect(wrapper.children().last().getNode().props.login)
-        .toEqual(minProps.login)
-      expect(wrapper.children().last().getNode().props.logout)
-        .toEqual(minProps.logout)
+      expect(wrapper.children().last().getNode().props.login).toEqual(
+        minProps.login
+      )
+      expect(wrapper.children().last().getNode().props.logout).toEqual(
+        minProps.logout
+      )
     })
   })
 
   describe('INTERACTION', () => {
     describe('clicking login buttons', () => {
       const wrapper = shallow(<App {...minProps} />)
-      
+
       beforeEach(() => {
         wrapper.find('button').forEach(button => {
           const className = button.getNode().props.className
           if (className.includes('login')) {
-            button.prop('onClick')()  
+            button.prop('onClick')()
           }
         })
       })
@@ -52,9 +54,9 @@ describe('Comments', () => {
 
     describe('clicking logout button', () => {
       const wrapper = shallow(<App {...minProps} />)
-      
+
       beforeEach(() => {
-        wrapper.find('.logout-button').prop('onClick')()    
+        wrapper.find('.logout-button').prop('onClick')()
       })
 
       it('should call logout', () => {

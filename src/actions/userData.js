@@ -23,7 +23,7 @@ export function login(providerName) {
         provider = new auth.TwitterAuthProvider()
         break
       default:
-        dispatch({ 
+        dispatch({
           type: types.AUTHENTICATE_USER_FAILURE,
           payload: new Error(`Provider with name "${providerName}" incorrect`),
           error: true
@@ -32,19 +32,19 @@ export function login(providerName) {
     }
     try {
       const authData = await auth().signInWithPopup(provider)
-      dispatch({ 
+      dispatch({
         type: types.AUTHENTICATE_USER_SUCCESS,
         payload: authData
       })
     } catch (error) {
-      dispatch({ 
+      dispatch({
         type: types.AUTHENTICATE_USER_FAILURE,
         payload: error,
         error: true
       })
     }
-  } 
-} 
+  }
+}
 
 export function logout() {
   return async dispatch => {
@@ -53,8 +53,8 @@ export function logout() {
       await auth().signOut()
       dispatch({ type: types.LOGOUT_USER_SUCCESS })
     } catch (error) {
-      dispatch({ 
-        type: types.LOGOUT_USER_FAILURE, 
+      dispatch({
+        type: types.LOGOUT_USER_FAILURE,
         payload: error,
         error: true
       })

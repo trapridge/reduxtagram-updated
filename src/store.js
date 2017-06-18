@@ -6,8 +6,9 @@ import logger from 'redux-logger'
 
 import { rootReducer } from './reducers/index'
 
-const persistedState = localStorage.getItem('state') ? 
-  JSON.parse(localStorage.getItem('state')) : {}
+const persistedState = localStorage.getItem('state')
+  ? JSON.parse(localStorage.getItem('state'))
+  : {}
 
 let middleware = applyMiddleware(thunk, logger)
 
