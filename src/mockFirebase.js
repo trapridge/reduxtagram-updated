@@ -8,9 +8,9 @@ const hasNextExpectation = type =>
 const consumeExpectation = () => expectations.splice(0, 1)
 
 const handlePromiseCallbacks = (
-  resolve,
-  reject,
-  acceptedExpectations,
+  resolve = () => {},
+  reject = () => {},
+  acceptedExpectations = [],
   overrideResolveData = null,
   overrideRejectData = null
 ) => {
@@ -36,7 +36,12 @@ const handlePromiseCallbacks = (
   }
 }
 
-const handleCallBacks = (type, success, error, acceptedExpectations) => {
+const handleCallBacks = (
+  type,
+  success = () => {},
+  error = () => {},
+  acceptedExpectations = []
+) => {
   if (hasNextExpectation(acceptedExpectations[0])) {
     const { type, payload, ...rest } = expectations[0]
     success({ val: () => payload, ...rest })

@@ -41,3 +41,5 @@ dist
 build
 
 e2e/errorShots/
+
+.DS_Store
