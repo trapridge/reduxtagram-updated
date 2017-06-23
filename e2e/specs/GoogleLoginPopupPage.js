@@ -23,6 +23,7 @@ export default class GoogleLoginPopupPage {
     this.userNext.click()
     this.passwordInput.waitForVisible(20000)
     this.passwordInput.setValue(password)
+    this.passwordNext.waitForVisible(20000)
     this.passwordNext.click()
     this.error.waitForVisible(20000)
   }

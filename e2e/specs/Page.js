@@ -4,7 +4,6 @@ export default class Page {
   get header() {
     return browser.element('h1 a')
   }
-
   get githubLogin() {
     return browser.element('button.github-login-button')
   }
@@ -43,5 +42,3 @@ export default class Page {
     this.logoutButton.click()
   }
 }
-
-// #root > div > button.github-login-button
