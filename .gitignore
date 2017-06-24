@@ -41,5 +41,7 @@ dist
 build
 
 e2e/errorShots/
+e2e/credentials.js
 
 .DS_Store
+

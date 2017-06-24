@@ -17,7 +17,11 @@ export default class GoogleLoginPopupPage {
     return browser.element('#password > div > div:nth-child(2)')
   }
 
-  login(identifier = 'juuso.ansaharju@gmail.com', password = 'whatever') {
+  login(
+    identifier = 'trapridge.test.acccount@gmail.com',
+    password = 'fail',
+    error = true
+  ) {
     this.userInput.waitForExist(20000)
     this.userInput.setValue(identifier)
     this.userNext.click()
@@ -25,6 +29,8 @@ export default class GoogleLoginPopupPage {
     this.passwordInput.setValue(password)
     this.passwordNext.waitForVisible(20000)
     this.passwordNext.click()
-    this.error.waitForVisible(20000)
+    if (error) {
+      this.error.waitForVisible(20000)
+    }
   }
 }

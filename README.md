@@ -6,14 +6,19 @@ React app mimicking Instagram. Built by extending and modifying the app created 
 
 `npm install` 
 
-## Run for development
-
-`npm run watch`
-
 # Run unit tests
 
 `npm test`
 
 # Run e2e tests
 
-TODO
+`npm run e2e`
+
+## Run for development
+
+`npm run watch`
+
+## Create production build
+
+`npm run build`
+

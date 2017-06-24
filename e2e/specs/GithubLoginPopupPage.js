@@ -14,7 +14,7 @@ export default class GithubLoginPopupPage {
     return browser.element('#js-flash-container')
   }
 
-  login(identifier = 'foo', password = 'bar') {
+  login(identifier = 'trapridge-test-account', password = 'fail') {
     this.userInput.waitForExist(20000)
     this.userInput.setValue(identifier)
     this.passwordInput.setValue(password)

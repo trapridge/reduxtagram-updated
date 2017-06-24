@@ -14,11 +14,13 @@ export default class GithubLoginPopupPage {
     return browser.element('#message-drawer .message-text')
   }
 
-  login(identifier = 'foo', password = 'bar') {
+  login(identifier = 'tr_test_account', password = 'fail', error = true) {
     this.userInput.waitForExist(20000)
     this.userInput.setValue(identifier)
     this.passwordInput.setValue(password)
     this.loginButton.click()
-    this.error.waitForExist(20000)
+    if (error) {
+      this.error.waitForExist(20000)
+    }
   }
 }
