@@ -1,8 +1,15 @@
 # TODO
 
-First
-
-- [ ] e2e tests
+- [ ] revamp ui with material-ui
+- [ ] rename & relocate project 
+- [ ] load images from e.g. flickr
+- [ ] personalize with firebase (rules too)
+- [ ] make responsive
+- [ ] extend e2e test coverage
+- [ ] add storybooks (https://storybook.js.org/basics/slow-start-guide/) 
+- [ ] setup vsc chrome debugger
+- [x] change images and test data
+- [x] e2e tests
 - [x] ducks
 - [x] unit tests
 - [x] persist comments with firebase
@@ -11,15 +18,4 @@ First
 - [x] eject from cra
 - [x] fix hmr
 - [x] update devDeps & setup to same as cotd
-- [x] propTypes
-
-Second
-
- * personalize with firebase (rules too)
- * add storybooks (https://storybook.js.org/basics/slow-start-guide/) 
- * setup vsc chrome debugger
- * change and load sample data
- * load images from e.g. flickr
- * upload images?
- * revamp ui with material-ui
- * make responsive
+- [x] propTypes 

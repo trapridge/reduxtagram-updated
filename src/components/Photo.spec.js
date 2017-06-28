@@ -14,7 +14,7 @@ describe('Photo', () => {
     it('renders image', () => {
       const props = {
         ...minProps,
-        post: { ...minProps.post, display_src: 'foo', caption: 'bar' }
+        post: { ...minProps.post, img_url: 'foo', caption: 'bar' }
       }
       const wrapper = shallow(<Photo {...props} />)
 

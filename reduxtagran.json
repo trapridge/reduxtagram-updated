@@ -1,0 +1,51 @@
+{
+  "comments": {
+    "a": {
+      "a": {
+        "text": "Amazing!",
+        "user": "Simo"
+      }
+    },
+    "b": {
+      "a": {
+        "text": "Lorem ipsum",
+        "user": "Simo"
+
+      },
+      "b": {
+        "text": "#rockrock",
+        "user": "Rami"
+      },
+      "c": {
+        "text": "This is one boring comment...",
+        "user": "Jari"
+      }
+    }
+  },
+  "posts": {
+    "a": {
+      "caption": "Otto",
+      "likes": 10,
+      "img_url": "https://c1.staticflickr.com/9/8076/29323689761_5f02690b6a.jpg", 
+      "comments": 1
+    },
+    "b": {
+      "caption": "Juuso",
+      "likes": 20,
+      "img_url": "https://c1.staticflickr.com/9/8307/29403177655_13a70a66d9.jpg",
+      "comments": 4
+    },
+    "c": {
+      "caption": "Samu",
+      "likes": 30,
+      "img_url": "https://c1.staticflickr.com/9/8328/29294897482_b0b7ef9cc0.jpg",
+      "comments": 0
+    },
+    "d": {
+      "caption": "MGR",
+      "likes": 40,
+      "img_url": "https://c1.staticflickr.com/9/8856/29368628886_c094d664e9.jpg",
+      "comments": 0
+    }
+  }
+}

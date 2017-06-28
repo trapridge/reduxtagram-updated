@@ -82,7 +82,8 @@
     "styles:watch": "stylus -u autoprefixer-stylus -w ./src/styles/style.styl -o ./src/styles/style.css",
     "deploy-now": "ns ./build --single",
     "test": "node scripts/test.js --env=jsdom",
-    "e2e": "cd e2e && ./node_modules/.bin/wdio ./wdio.conf.js && cd .."
+    "e2e": "cd e2e && ./node_modules/.bin/wdio ./wdio.conf.js && cd ..",
+    "e2e-no-auth": "cd e2e && ./node_modules/.bin/wdio ./wdio.conf.js --spec specs/navigation.e2e.js && cd .."
   },
   "jest": {
     "setupTestFrameworkScriptFile": "./node_modules/jest-enzyme/lib/index.js",

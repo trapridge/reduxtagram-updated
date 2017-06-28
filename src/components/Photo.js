@@ -10,7 +10,7 @@ const Photo = ({ post, id, incrementLikes }) => {
         <Link to={`/view/${id}`} className="image-link">
           <img
             className="grid-photo"
-            src={post.display_src}
+            src={post.img_url}
             alt={post.caption}
           />
         </Link>
