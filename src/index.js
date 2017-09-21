@@ -3,6 +3,7 @@ import { render } from 'react-dom'
 import { Router, Route, IndexRoute } from 'react-router'
 import { Provider } from 'react-redux'
 import Raven from 'raven-js'
+import injectTapEventPlugin from 'react-tap-event-plugin'
 
 import './styles/style.css'
 
@@ -24,6 +25,7 @@ const routes = (
   </Provider>
 )
 
+injectTapEventPlugin()
 render(routes, document.getElementById('root'))
 
 Raven.config(sentry_url).install()

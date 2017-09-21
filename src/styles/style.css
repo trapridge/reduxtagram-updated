@@ -161,37 +161,6 @@ input::-moz-focus-inner {
 img {
   max-width: 100%;
 }
-html {
-  font-size: 10px;
-  font-family: sans-serif;
-}
-p {
-  font-size: 1.6rem;
-  line-height: 1.5;
-}
-h1 {
-  font-family: billabong, 'billabongregular';
-  text-align: center;
-  font-weight: 100;
-  font-size: 13rem;
-  margin: 2rem 0;
-  letter-spacing: -1px;
-  text-shadow: 0px 4px 0 rgba(18,86,136,0.11);
-}
-h1 a {
-  color: #125688;
-  text-decoration: none;
-}
-h1 a:focus {
-  outline: 0;
-}
-@font-face {
-  font-family: 'billabongregular';
-  src: url("https://cdn.rawgit.com/milktronics/beaglegr.am/master/public/fonts/billabong-webfont.eot");
-  src: url("https://cdn.rawgit.com/milktronics/beaglegr.am/master/public/fonts/billabong-webfont.eot?#iefix") format('embedded-opentype'), url("https://cdn.rawgit.com/milktronics/beaglegr.am/master/public/fonts/billabong-webfont.woff") format('woff'), url("https://cdn.rawgit.com/milktronics/beaglegr.am/master/public/fonts/billabong-webfont.ttf") format('truetype'), url("https://cdn.rawgit.com/milktronics/beaglegr.am/master/public/fonts/billabong-webfont.svg#billabongregular") format('svg');
-  font-weight: normal;
-  font-style: normal;
-}
 .likes-heart {
   opacity: 0;
   transition: all 0.5s;
@@ -213,7 +182,7 @@ h1 a:focus {
   display: none;
 }
 body {
-  background: #fafafa;
+  background: offwhite;
 }
 .photo-grid {
   display: -webkit-box;
@@ -235,7 +204,7 @@ body {
       flex-shrink: 0;
   margin: 0 2rem 2rem 2rem;
   padding: 2rem;
-  border: 1px solid #edeeed;
+  border: 1px solid #d3d3d3;
   background: #fff;
   box-shadow: 0 0 0 5px rgba(0,0,0,0.03);
   position: relative;
@@ -284,7 +253,7 @@ body {
   color: #f00;
 }
 .comment {
-  border-bottom: 1px solid #edeeed;
+  border-bottom: 1px solid #d3d3d3;
   padding: 0.5rem 0;
 }
 .comment p {
@@ -292,7 +261,7 @@ body {
   margin: 0;
 }
 .comment strong {
-  color: #125688;
+  color: #00f;
   margin-right: 5px;
 }
 .comment:hover .remove-comment {
@@ -304,7 +273,7 @@ body {
   border: 0;
   font-size: 1.3rem;
   padding: 1rem 0;
-  border-bottom: 1px solid #edeeed;
+  border-bottom: 1px solid #d3d3d3;
   outline: none;
   resize: vertical;
 }
@@ -317,7 +286,7 @@ body {
   font-size: 2rem;
   padding: 1rem;
   position: absolute;
-  color: #125688;
+  color: #00f;
   left: 50%;
   top: 50%;
   pointer-events: none;
@@ -333,7 +302,6 @@ body {
       -ms-flex-pack: justify;
           justify-content: space-between;
 }
-button,
 .button {
   border: 2px solid #f2f2f2;
   background: none;
@@ -345,15 +313,13 @@ button,
   padding: 5px;
   text-align: center;
   font-size: 15px;
-  color: #125688;
+  color: #00f;
   transition: all 0.2s;
   box-sizing: padding-box;
 }
-button:hover,
 .button:hover,
-button:focus,
 .button:focus {
-  border-color: #125688;
+  border-color: #00f;
   outline: 0;
 }
 /*
@@ -362,7 +328,7 @@ button:focus,
 .speech-bubble {
   width: 1.5rem;
   height: 1.25rem;
-  background: #125688;
+  background: #00f;
   display: inline-block;
   border-radius: 50%;
   position: relative;
@@ -375,7 +341,16 @@ button:focus,
   height: 0;
   border-style: solid;
   border-width: 0 1.25rem 1.25rem 0;
-  border-color: transparent #125688 transparent transparent;
+  border-color: transparent #00f transparent transparent;
   top: 30%;
   left: 0;
+}
+.photo-grid img {
+  -o-object-fit: cover;
+     object-fit: cover;
+  width: calc(20rem);
+  height: calc(20rem);
+}
+.fa-sign-in {
+  color: #fff !important;
 }
